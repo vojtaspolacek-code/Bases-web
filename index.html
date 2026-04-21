@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BASES — Americká semínka</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Inter:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <style>
+
+        /* ─────────────────────────────────────────
+           RESET & CUSTOM PROPERTIES
+        ───────────────────────────────────────── */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black:       #000000;
+            --black-soft:  #0c0c0c;
+            --gold:        #C9A435;
+            --gold-light:  #DEB84E;
+            --gold-dim:    rgba(201, 164, 53, 0.15);
+            --gold-line:   rgba(201, 164, 53, 0.35);
+            --white:       #FFFFFF;
+            --white-60:    rgba(255,255,255,0.60);
+            --white-30:    rgba(255,255,255,0.30);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--black);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+
+        /* ─────────────────────────────────────────
+           NAVIGATION
+        ───────────────────────────────────────── */
+        .nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 200;
+            padding: 26px 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Fade to transparent gradient */
+        .nav::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        /* Logo: CSS-rendered for now (JPG logos need PNG swap later) */
+        .nav-logo {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-logo-icon {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            /* trick: screen blend hides white bg on dark */
+            mix-blend-mode: screen;
+            filter: saturate(1.1);
+        }
+
+        .nav-logo-text {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            font-size: 22px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        .nav-links {
+            position: relative;
+            display: flex;
+            gap: 44px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--white-60);
+            font-family: 'Oswald', sans-serif;
+            font-weight: 400;
+            font-size: 12px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            transition: color 0.25s;
+        }
+
+        .nav-links a:hover { color: var(--gold); }
+
+        .nav-actions {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .btn-cart {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--white);
+            border: 1px solid var(--gold-line);
+            padding: 11px 22px;
+            transition: background 0.25s, color 0.25s, border-color 0.25s;
+        }
+
+        .btn-cart:hover {
+            background: var(--gold);
+            color: var(--black);
+            border-color: var(--gold);
+        }
+
+        .btn-cart svg {
+            width: 15px; height: 15px;
+            flex-shrink: 0;
+        }
+
+
+        /* ─────────────────────────────────────────
+           HERO
+        ───────────────────────────────────────── */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 720px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: var(--black);
+        }
+
+        /* Subtle noise texture overlay */
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        /* Gold radial glow behind product */
+        .hero-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(
+                ellipse at center,
+                rgba(201,164,53,0.12) 0%,
+                rgba(201,164,53,0.04) 45%,
+                transparent 70%
+            );
+            pointer-events: none;
+        }
+
+        /* Top gold line */
+        .hero-top-line {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold) 70%, transparent 100%);
+        }
+
+        /* Side accent lines */
+        .hero-side-line {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 220px;
+            background: linear-gradient(180deg, transparent 0%, var(--gold-line) 50%, transparent 100%);
+        }
+        .hero-side-line.left  { left: 52px; }
+        .hero-side-line.right { right: 52px; }
+
+        /* 3-column grid layout */
+        .hero-grid {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            width: 100%;
+            max-width: 1440px;
+            padding: 0 100px;
+            gap: 60px;
+        }
+
+        /* ── Left column ── */
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .hero-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            display: block;
+            width: 36px;
+            height: 1px;
+            background: var(--gold);
+            flex-shrink: 0;
+        }
+
+        .hero-heading {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(48px, 5.5vw, 80px);
+            font-weight: 700;
+            line-height: 0.93;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-heading .gold { color: var(--gold); }
+
+        .hero-subtext {
+            font-size: 13.5px;
+            line-height: 1.75;
+            color: var(--white-60);
+            font-weight: 300;
+            max-width: 300px;
+            padding-top: 4px;
+            border-top: 1px solid var(--gold-line);
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--black);
+            background: var(--gold);
+            padding: 16px 30px;
+            align-self: flex-start;
+            margin-top: 4px;
+            transition: background 0.25s, transform 0.25s;
+        }
+
+        .hero-cta:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        .hero-cta svg {
+            width: 14px; height: 14px;
+            transition: transform 0.25s;
+        }
+
+        .hero-cta:hover svg { transform: translateX(5px); }
+
+        /* ── Center: Product image ── */
+        .hero-product {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-product-img {
+            height: clamp(360px, 52vh, 580px);
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 50px 90px rgba(201,164,53,0.18))
+                    drop-shadow(0 10px 30px rgba(0,0,0,0.6));
+            animation: floatProduct 7s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes floatProduct {
+            0%,  100% { transform: translateY(0px);   }
+            50%        { transform: translateY(-18px); }
+        }
+
+        /* ── Right column ── */
+        .hero-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0;
+        }
+
+        .hero-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .stat {
+            padding: 22px 0;
+            text-align: right;
+            border-bottom: 1px solid var(--gold-line);
+        }
+
+        .stat:first-child { border-top: 1px solid var(--gold-line); }
+
+        .stat-num {
+            font-family: 'Oswald', sans-serif;
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+
+        .stat-lbl {
+            font-size: 10px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--white-30);
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        /* Scroll indicator */
+        .scroll-cue {
+            position: absolute;
+            bottom: 36px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .scroll-cue span {
+            font-family: 'Oswald', sans-serif;
+            font-size: 9px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--white-30);
+        }
+
+        .scroll-bar {
+            width: 1px;
+            height: 52px;
+            background: linear-gradient(180deg, var(--gold) 0%, transparent 100%);
+            transform-origin: top;
+            animation: scrollDrop 2.2s ease-in-out infinite;
+        }
+
+        @keyframes scrollDrop {
+            0%   { opacity: 0; transform: scaleY(0); }
+            30%  { opacity: 1; }
+            100% { opacity: 0; transform: scaleY(1); }
+        }
+
+
+        /* ─────────────────────────────────────────
+           TICKER STRIP
+        ───────────────────────────────────────── */
+        .ticker {
+            background: var(--gold);
+            overflow: hidden;
+            padding: 13px 0;
+            white-space: nowrap;
+            border-top: 1px solid rgba(0,0,0,0.15);
+            border-bottom: 1px solid rgba(0,0,0,0.15);
+        }
+
+        .ticker-track {
+            display: inline-flex;
+            animation: tickerScroll 22s linear infinite;
+        }
+
+        .ticker-item {
+            font-family: 'Oswald', sans-serif;
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--black);
+            padding: 0 36px;
+        }
+
+        .ticker-sep {
+            color: rgba(0,0,0,0.35);
+            font-size: 8px;
+        }
+
+        @keyframes tickerScroll {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════
+         NAVIGATION
+    ═══════════════════════════════════ -->
+    <nav class="nav">
+        <a href="/" class="nav-logo">
+            <!-- Mix-blend-mode screen trick to remove white bg — swap with PNG when available -->
+            <img class="nav-logo-icon" src="LOGA/bb5a6a0c-d91d-446e-92e5-f2489796bbb8.jpg" alt="">
+            <span class="nav-logo-text">BASES</span>
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="#produkty">Produkty</a></li>
+            <li><a href="#prichute">Příchutě</a></li>
+            <li><a href="#o-nas">O nás</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <a href="#kosik" class="btn-cart">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <path d="M16 10a4 4 0 01-8 0"/>
+                </svg>
+                Košík (0)
+            </a>
+        </div>
+    </nav>
+
+
+    <!-- ═══════════════════════════════════
+         HERO
+    ═══════════════════════════════════ -->
+    <section class="hero">
+        <div class="hero-top-line"></div>
+        <div class="hero-glow"></div>
+        <div class="hero-side-line left"></div>
+        <div class="hero-side-line right"></div>
+
+        <div class="hero-grid">
+
+            <!-- LEFT: Copy -->
+            <div class="hero-left">
+                <div class="hero-eyebrow">Přímý dovoz z USA</div>
+
+                <h1 class="hero-heading">
+                    Americká<br>
+                    <span class="gold">semínka</span><br>
+                    pro hráče
+                </h1>
+
+                <p class="hero-subtext">
+                    Ochucovaná slunečnicová semínka z Ameriky. Pro baseballisty a softballisty, kteří berou hru vážně.
+                </p>
+
+                <a href="#produkty" class="hero-cta">
+                    Prozkoumat
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- CENTER: Product — centerpiece -->
+            <div class="hero-product">
+                <img
+                    class="hero-product-img"
+                    src="Etikety produktů/original - přední.png"
+                    alt="BASES Original Sunflower Seeds"
+                >
+            </div>
+
+            <!-- RIGHT: Stats -->
+            <div class="hero-right">
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-num">7+</div>
+                        <div class="stat-lbl">Příchutí</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-num">3000+</div>
+                        <div class="stat-lbl">Výdejních míst</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-num">USA</div>
+                        <div class="stat-lbl">Přímý dovoz</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Scroll cue -->
+        <div class="scroll-cue">
+            <span>Scroll</span>
+            <div class="scroll-bar"></div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════
+         TICKER
+    ═══════════════════════════════════ -->
+    <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+            <span class="ticker-item">Přímý dovoz z USA</span>
+            <span class="ticker-sep">◆</span>
+            <span class="ticker-item">7 unikátních příchutí</span>
+            <span class="ticker-sep">◆</span>
+            <span class="ticker-item">Pro baseballisty &amp; softballisty</span>
+            <span class="ticker-sep">◆</span>
+            <span class="ticker-item">Dárek zdarma k objednávce</span>
+            <span class="ticker-sep">◆</span>
+            <span class="ticker-item">3000+ výdejních míst po celé ČR</span>
+            <span class="ticker-sep">◆</span>
+            <span class="ticker-item">Znovu uzavíratelné balení</span>
+            <span class="ticker-sep">◆</span>
+            <!-- duplicate for seamless loop -->
+            <span class="ticker-item">Přímý dovoz z USA</span>
+            <span class="ticker-sep">◆</span>
+            <span class="ticker-item">7 unikátních příchutí</span>
+            <span class="ticker-sep">◆</span>
+            <span class="ticker-item">Pro baseballisty &amp; softballisty</span>
+            <span class="ticker-sep">◆</span>
+            <span class="ticker-item">Dárek zdarma k objednávce</span>
+            <span class="ticker-sep">◆</span>
+            <span class="ticker-item">3000+ výdejních míst po celé ČR</span>
+            <span class="ticker-sep">◆</span>
+            <span class="ticker-item">Znovu uzavíratelné balení</span>
+            <span class="ticker-sep">◆</span>
+        </div>
+    </div>
+
+
+</body>
+</html>
