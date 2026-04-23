@@ -48,7 +48,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="cs" className={`${montserrat.variable} ${playfair.variable} ${exo2.variable} ${bodoni.variable} ${cinzel.variable}`}>
-      <body className="bg-[#0a0a0a] text-white font-sans">
+      <body className="bg-transparent text-white font-sans">
         <CartProvider>
           <Header />
           {children}

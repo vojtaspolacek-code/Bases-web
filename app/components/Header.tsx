@@ -1,6 +1,5 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCart } from '../context/CartContext'
@@ -25,26 +24,15 @@ function NavLink({ href, children, small }: { href: string; children: React.Reac
 }
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false)
   const { openCart, items } = useCart()
   const totalQty = items.reduce((s, i) => s + i.qty, 0)
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300
-        ${scrolled
-          ? 'bg-black border-b border-white/10'
-          : 'bg-transparent border-b border-transparent'
-        }`}
+      className="fixed top-0 left-0 w-full z-50 pointer-events-none
+                 bg-gradient-to-b from-black via-black/80 to-transparent pb-16"
     >
-      <div className="grid grid-cols-3 items-center px-8 lg:px-14 py-5">
+      <div className="grid grid-cols-3 items-center px-8 lg:px-14 py-5 pointer-events-auto">
 
         {/* Logo — vlevo */}
         <Link href="/" className="justify-self-start shrink-0">
