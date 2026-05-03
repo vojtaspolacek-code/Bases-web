@@ -100,7 +100,7 @@ export default function UcetPage() {
     <main className="min-h-screen bg-[#0a0a0a] pt-[72px] md:pt-0 grid md:grid-cols-2">
 
       {/* ── LEVÝ SLOUPEC: formulář ── */}
-      <div className="flex flex-col items-center justify-center px-8 pt-24 pb-14 md:pt-20 md:pb-10 lg:py-0 md:px-12 lg:px-20">
+      <div className="flex flex-col items-center justify-center px-8 pt-32 pb-14 md:pt-40 lg:pt-48 md:pb-10 lg:py-0 md:px-12 lg:px-20">
         <div className="w-full max-w-[400px]">
 
           <AnimatePresence mode="wait">
@@ -134,8 +134,7 @@ export default function UcetPage() {
                     {/* Zapomenuté heslo — pod inputem, doprava */}
                     <div className="flex justify-end mt-2.5">
                       <Link href="/ucet/reset"
-                        className="text-[9px] no-underline text-white/35
-                                   hover:text-white/55 transition-colors duration-300"
+                        className="text-[10px] no-underline text-[#c7a04b]/40 hover:text-[#c7a04b]/80 transition-colors duration-300"
                         style={{ fontFamily: 'var(--font-montserrat)' }}>
                         Zapomenuté heslo?
                       </Link>
@@ -149,11 +148,11 @@ export default function UcetPage() {
 
                 <SsoSection onSso={handleSso} />
 
-                <p className="mt-7 text-center text-xs"
-                  style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(255,255,255,0.30)' }}>
+                <p className="mt-8 text-center text-[13px] tracking-wide"
+                  style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(255,255,255,0.40)' }}>
                   Ještě nemáte účet?{' '}
                   <Link href="/ucet/registrace"
-                    className="no-underline font-medium text-[#c7a04b] hover:text-[#c7a04b]/80 transition-colors duration-300">
+                    className="no-underline font-semibold text-[#c7a04b] hover:text-[#c7a04b]/80 transition-colors duration-300 tracking-wider">
                     Vytvořit
                   </Link>
                 </p>

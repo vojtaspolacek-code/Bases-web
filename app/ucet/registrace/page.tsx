@@ -97,7 +97,7 @@ export default function RegistracePage() {
     <main className="min-h-screen bg-[#0a0a0a] pt-[72px] md:pt-0 grid md:grid-cols-2">
 
       {/* ── LEVÝ SLOUPEC ── */}
-      <div className="flex flex-col items-center justify-center px-8 pt-24 pb-14 md:pt-20 md:pb-10 lg:py-0 md:px-12 lg:px-20">
+      <div className="flex flex-col items-center justify-center px-8 pt-32 pb-14 md:pt-40 lg:pt-48 md:pb-10 lg:py-0 md:px-12 lg:px-20">
         <div className="w-full max-w-[400px]">
 
           <AnimatePresence mode="wait">
@@ -146,11 +146,11 @@ export default function RegistracePage() {
 
                 <SsoSection onSso={handleSso} />
 
-                <p className="mt-7 text-center text-xs"
-                  style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(255,255,255,0.30)' }}>
+                <p className="mt-8 text-center text-[13px] tracking-wide"
+                  style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(255,255,255,0.40)' }}>
                   Již máte účet?{' '}
                   <Link href="/ucet"
-                    className="no-underline font-medium text-[#c7a04b] hover:text-[#c7a04b]/80 transition-colors duration-300">
+                    className="no-underline font-semibold text-[#c7a04b] hover:text-[#c7a04b]/80 transition-colors duration-300 tracking-wider">
                     Přihlásit se
                   </Link>
                 </p>
