@@ -13,8 +13,9 @@ const PRODUCTS: ProductItem[] = [
       '/products/david/barbecue/4.png.png',
     ],
     price: '169 Kč',
-    description: 'Autentická chuť amerického grilování s intenzivním kouřovým aroma 🍖. Dvojitě pražená semínka přinášejí nekompromisní křupavost a poctivou slanost. Ideální parťák, když tě přepadne chuť na něco opravdu výrazného 🔥.',
-    badge: '💎 NÁŠ TIP',
+    description: 'Autentická chuť amerického grilování s intenzivním kouřovým aroma. Dvojitě pražená semínka přinášejí nekompromisní křupavost a poctivou slanost. Ideální parťák, když tě přepadne chuť na něco opravdu výrazného.',
+    badge: 'true',
+    mobileScale: 0.82,
   },
   {
     slug: 'cracked-pepper',
@@ -27,8 +28,9 @@ const PRODUCTS: ProductItem[] = [
       '/products/david/cracked-pepper/4.png.png',
     ],
     price: '169 Kč',
-    description: 'Ostrá pepřová tečka, která tě udrží ve hře ⚡. Legendární americká semínka kombinují precizní slanost s intenzitou černého pepře. Prémiová a nekompromisně křupavá svačina pro každého fanouška ⚾.',
-    badge: '💎 NÁŠ TIP',
+    description: 'Ostrá pepřová tečka, která tě udrží ve hře. Legendární americká semínka kombinují precizní slanost s intenzitou černého pepře. Prémiová a nekompromisně křupavá svačina pro každého fanouška.',
+    badge: 'true',
+    mobileScale: 0.82,
   },
   {
     slug: 'sweet-spicy',
@@ -41,14 +43,15 @@ const PRODUCTS: ProductItem[] = [
       '/products/david/sweet-spicy/4.png.png',
     ],
     price: '169 Kč',
-    description: 'Sladko-pikantní exploze v každém prémiovém kousku 🌶️. Dvojitě pražená semínka DAVID zaručují maximální křupavost a chuťový zážitek, který tě zaručeně dostane ✨.',
+    description: 'Sladko-pikantní exploze v každém prémiovém kousku. Dvojitě pražená semínka DAVID zaručují maximální křupavost a chuťový zážitek, který tě zaručeně dostane.',
+    mobileScale: 0.82,
   },
 ]
 
 export default function DavidPage() {
   return (
-    <main className="min-h-screen bg-[#0a0a0a] pt-32 pb-24 px-8 lg:px-16">
-      <div className="mb-16 flex items-end justify-between border-b border-white/5 pb-8">
+    <main className="min-h-screen bg-[#0a0a0a] pt-8 md:pt-36 pb-6 md:pb-28 px-8 lg:px-16">
+      <div className="-mt-6 md:mt-0 mb-8 md:mb-8 flex items-end justify-between md:border-b md:border-white/5 pb-8">
         <div>
           <p
             className="text-[10px] uppercase tracking-[0.4em] mb-3"
@@ -65,7 +68,7 @@ export default function DavidPage() {
         </div>
         <Link
           href="/slunecnicova-seminka"
-          className="text-[10px] uppercase tracking-[0.3em] text-white/30
+          className="hidden md:inline text-[10px] uppercase tracking-[0.3em] text-white/30
                      hover:text-white/70 transition-colors duration-300 no-underline"
           style={{ fontFamily: 'var(--font-montserrat)' }}
         >

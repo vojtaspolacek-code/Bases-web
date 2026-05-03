@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(findstr /m \"lucide-react\" \"C:\\\\Users\\\\vojta\\\\Desktop\\\\PROJEKTY - CLAUDE\\\\Bases web\\\\package.json\")",
+      "Bash(npm run *)",
+      "Bash(vercel deploy *)",
+      "Bash(vercel --prod)"
+    ]
+  }
+}

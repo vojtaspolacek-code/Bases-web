@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 import { useCart } from '../context/CartContext'
 
 const stagger = {
@@ -17,6 +18,7 @@ const fadeUp = {
 export default function CartDrawer() {
   const { isOpen, items, closeCart, increment, decrement } = useCart()
   const total = items.reduce((sum, i) => sum + i.price * i.qty, 0)
+  const router = useRouter()
 
   return (
     <AnimatePresence>
@@ -29,7 +31,7 @@ export default function CartDrawer() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.28 }}
-            className="fixed inset-0 z-[90] bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 z-[10000] bg-black/70 backdrop-blur-sm"
             onClick={closeCart}
           />
 
@@ -40,7 +42,7 @@ export default function CartDrawer() {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ duration: 0.42, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.06 }}
-            className="fixed top-0 right-0 h-full w-full max-w-md z-[100] flex flex-col"
+            className="fixed top-0 right-0 h-full w-full max-w-md z-[10001] flex flex-col"
             style={{
               background: 'rgba(8,8,8,0.98)',
               borderLeft: '1px solid rgba(255,255,255,0.06)',
@@ -180,6 +182,7 @@ export default function CartDrawer() {
 
                 {/* CTA — arrow shifts on hover */}
                 <motion.button
+                  onClick={() => { closeCart(); router.push('/objednavka') }}
                   className="group w-full py-5 flex items-center justify-center gap-3
                              text-[11px] uppercase tracking-[0.35em] font-bold text-black
                              transition-all duration-300 relative overflow-hidden"
@@ -187,7 +190,7 @@ export default function CartDrawer() {
                   whileHover={{ filter: 'brightness(1.08)' }}
                   whileTap={{ scale: 0.99 }}
                 >
-                  <span>Přejít k platbě</span>
+                  <span>Dokončit objednávku</span>
                   <span className="transition-transform duration-300 group-hover:translate-x-1 text-base leading-none">
                     →
                   </span>
@@ -198,7 +201,7 @@ export default function CartDrawer() {
                   <span className="text-[10px]">🚚</span>
                   <p className="text-[9px] uppercase tracking-[0.28em] text-white/40 m-0"
                      style={{ fontFamily: 'var(--font-montserrat)' }}>
-                    Doprava zdarma nad 500 Kč
+                    Doprava zdarma nad 1 000 Kč
                   </p>
                 </div>
               </motion.div>

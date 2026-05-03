@@ -13,15 +13,16 @@ const PRODUCTS: ProductItem[] = [
       '/products/bigs/4.png.png',
     ],
     price: '179 Kč',
-    description: 'Nečekaný, ale naprosto návykový zásah kyselé okurky v každém kousku 🥒. Tahle americká rarita s dvojitě praženou texturou je stvořená pro ty, co hledají něco neokoukaného. Připrav se na chuťový šok, který tě nepřestane bavit ⚡.',
-    badge: '💎 NÁŠ TIP',
+    description: 'Nečekaný, ale naprosto návykový zásah kyselé okurky v každém kousku. Tahle americká rarita s dvojitě praženou texturou je stvořená pro ty, co hledají něco neokoukaného. Připrav se na chuťový šok, který tě nepřestane bavit.',
+    badge: 'true',
+    mobileScale: 0.82,
   },
 ]
 
 export default function BigsPage() {
   return (
-    <main className="min-h-screen bg-[#0a0a0a] pt-32 pb-24 px-8 lg:px-16">
-      <div className="mb-16 flex items-end justify-between border-b border-white/5 pb-8">
+    <main className="min-h-screen bg-[#0a0a0a] pt-8 md:pt-36 pb-6 md:pb-28 px-8 lg:px-16">
+      <div className="-mt-6 md:mt-0 mb-8 md:mb-8 flex items-end justify-between md:border-b md:border-white/5 pb-8">
         <div>
           <p
             className="text-[10px] uppercase tracking-[0.4em] mb-3"
@@ -38,7 +39,7 @@ export default function BigsPage() {
         </div>
         <Link
           href="/slunecnicova-seminka"
-          className="text-[10px] uppercase tracking-[0.3em] text-white/30
+          className="hidden md:inline text-[10px] uppercase tracking-[0.3em] text-white/30
                      hover:text-white/70 transition-colors duration-300 no-underline"
           style={{ fontFamily: 'var(--font-montserrat)' }}
         >

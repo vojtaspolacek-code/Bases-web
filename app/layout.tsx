@@ -1,4 +1,7 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
+import { ClerkProvider } from '@clerk/nextjs'
+import Footer from './components/Footer'
 import { Montserrat, Playfair_Display, Exo_2, Bodoni_Moda, Cinzel } from 'next/font/google'
 import Header from './components/Header'
 import CartDrawer from './components/CartDrawer'
@@ -47,14 +50,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
+    <ClerkProvider>
     <html lang="cs" className={`${montserrat.variable} ${playfair.variable} ${exo2.variable} ${bodoni.variable} ${cinzel.variable}`}>
       <body className="bg-transparent text-white font-sans">
         <CartProvider>
           <Header />
-          {children}
+          <main className="relative z-0 pt-[100px] md:pt-0">
+            {children}
+          </main>
           <CartDrawer />
+          <Suspense fallback={null}>
+            <Footer />
+          </Suspense>
         </CartProvider>
       </body>
     </html>
+    </ClerkProvider>
   )
 }

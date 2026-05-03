@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { motion, useInView } from 'framer-motion'
-import { useRef, useCallback } from 'react'
+import { useRef, useCallback, useState, useEffect } from 'react'
 
 /* ─── Levitation keyframes injected once ─── */
 const FLOAT_CSS = `
@@ -355,6 +355,15 @@ export default function SignatureSelection() {
   const ref    = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-8% 0px' })
 
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+  const seedsHref = isMobile ? '/?brands=1' : '/slunecnicova-seminka'
+
   return (
     <section
       id="produkty"
@@ -417,7 +426,7 @@ export default function SignatureSelection() {
           className="flex flex-col items-center mt-14 gap-8"
         >
           <Link
-            href="/slunecnicova-seminka"
+            href={seedsHref}
             className="group/cta inline-flex items-center gap-3 no-underline
                        px-10 py-3 transition-all duration-300"
             style={{

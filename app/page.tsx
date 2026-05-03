@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Hero from './components/Hero'
-import SignatureSelection from './components/SignatureSelection'
+import ProductShowcase from './components/ProductShowcase'
 
 export default function Home() {
   return (
@@ -10,7 +10,7 @@ export default function Home() {
           FIXNÍ TAPETA — stadion + VŠECHNY overlaye, přibito na obrazovce.
           Stejný vizuál od vrchu dolů, nehne se.
       ═══════════════════════════════════════════════════════════════ */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
+      <div className="hidden md:block fixed inset-0 z-0 pointer-events-none">
         <Image
           src="/hero-bg-bw.jpg"
           alt=""
@@ -47,9 +47,9 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════════════════
           OBSAH — scrolluje přes fixní tapetu
       ═══════════════════════════════════════════════════════════════ */}
-      <div className="relative z-10">
+      <div className="relative">
         <Hero />
-        <SignatureSelection />
+        <ProductShowcase />
       </div>
 
     </main>
