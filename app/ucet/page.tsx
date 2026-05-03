@@ -100,8 +100,8 @@ export default function UcetPage() {
     <main className="min-h-screen bg-[#0a0a0a] pt-[72px] md:pt-0 grid md:grid-cols-2">
 
       {/* ── LEVÝ SLOUPEC: formulář ── */}
-      <div className="flex flex-col items-center justify-start md:justify-center overflow-y-auto px-8 pb-14 md:pb-10 lg:px-20 h-screen">
-        <div className="w-full max-w-[400px] mt-[100px] md:mt-[120px] lg:mt-[140px] mb-8">
+      <div className="flex flex-col items-center justify-center px-8 pt-32 pb-14 md:pt-40 lg:pt-48 md:pb-10 lg:py-0 md:px-12 lg:px-20">
+        <div className="w-full max-w-[400px]">
 
           <AnimatePresence mode="wait">
 
