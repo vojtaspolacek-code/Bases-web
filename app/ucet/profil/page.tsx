@@ -3,29 +3,32 @@
 import { useUser, useClerk } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { ChevronRight } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { LogOut, Package, MapPin } from 'lucide-react'
 
 type Tab = 'osobni' | 'objednavky' | 'adresy'
 
 const TABS: { id: Tab; label: string }[] = [
-  { id: 'osobni',      label: 'Osobní údaje'       },
-  { id: 'objednavky',  label: 'Historie objednávek' },
-  { id: 'adresy',      label: 'Dodací adresy'       },
+  { id: 'osobni',     label: 'Osobní údaje'       },
+  { id: 'objednavky', label: 'Historie objednávek' },
+  { id: 'adresy',     label: 'Dodací adresy'       },
 ]
 
-/* ─── Elegantní read-only pole ────────────────────────────────── */
+const ease = [0.22, 1, 0.36, 1] as [number, number, number, number]
+
+/* ─── Read-only datové pole ───────────────────────────────────── */
 function Field({ label, value }: { label: string; value: string }) {
   return (
-    <div className="relative pb-6" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+    <div className="pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
       <p
-        className="text-[9px] uppercase tracking-[0.42em] mb-3"
-        style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(199,160,75,0.5)' }}
+        className="text-[8px] uppercase tracking-[0.4em] mb-2"
+        style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(255,255,255,0.30)' }}
       >
         {label}
       </p>
       <p
-        className="text-[0.9rem] text-white/75 pb-2"
-        style={{ fontFamily: 'var(--font-montserrat)', letterSpacing: '0.03em' }}
+        className="text-xl font-light text-white/90"
+        style={{ fontFamily: 'var(--font-exo2)', letterSpacing: '0.04em' }}
       >
         {value || '—'}
       </p>
@@ -33,36 +36,28 @@ function Field({ label, value }: { label: string; value: string }) {
   )
 }
 
-/* ─── Placeholder pro budoucí záložky ─────────────────────────── */
-function EmptyState({ text }: { text: string }) {
+/* ─── Prázdný stav záložky ────────────────────────────────────── */
+function EmptyState({ icon: Icon, text }: { icon: React.ElementType; text: string }) {
   return (
-    <div className="flex flex-col items-center justify-center py-24 px-8 text-center">
-      <div
-        className="w-12 h-px mb-10 mx-auto"
-        style={{ background: 'linear-gradient(to right, transparent, rgba(199,160,75,0.3), transparent)' }}
-      />
+    <div className="flex flex-col items-center justify-center py-28 px-8 text-center">
+      <Icon size={36} style={{ color: 'rgba(255,255,255,0.08)', marginBottom: '1.5rem' }} />
       <p
-        className="text-2xl font-thin uppercase tracking-[0.18em] text-white/20"
+        className="text-sm font-light uppercase tracking-[0.22em] text-white/20"
         style={{ fontFamily: 'var(--font-exo2)' }}
       >
         {text}
       </p>
-      <div
-        className="w-12 h-px mt-10 mx-auto"
-        style={{ background: 'linear-gradient(to right, transparent, rgba(199,160,75,0.3), transparent)' }}
-      />
     </div>
   )
 }
 
-/* ─── Hlavní komponenta ────────────────────────────────────────── */
+/* ─── Hlavní komponenta ───────────────────────────────────────── */
 export default function ProfilPage() {
   const { user, isLoaded } = useUser()
   const { signOut }        = useClerk()
   const router             = useRouter()
   const [tab, setTab]      = useState<Tab>('osobni')
 
-  /* Loading */
   if (!isLoaded) {
     return (
       <main className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
@@ -76,169 +71,249 @@ export default function ProfilPage() {
   const email     = user?.primaryEmailAddress?.emailAddress ?? ''
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a] pt-8 md:pt-36 pb-20 px-6 md:px-10 lg:px-20">
+    <main className="min-h-screen bg-[#0a0a0a] pt-[72px]">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pt-14 pb-24">
 
-      {/* ── Eyebrow ── */}
-      <p
-        className="text-[10px] uppercase tracking-[0.42em] mb-10 md:mb-14"
-        style={{ color: '#c7a04b', fontFamily: 'var(--font-montserrat)' }}
-      >
-        — Váš účet
-      </p>
+        {/* ── Eyebrow ── */}
+        <p
+          className="text-[9px] uppercase tracking-[0.5em] mb-3"
+          style={{ color: 'rgba(199,160,75,0.65)', fontFamily: 'var(--font-montserrat)' }}
+        >
+          — Váš účet
+        </p>
 
-      {/* ── Dvousloupcové rozvržení ── */}
-      <div className="flex flex-col md:flex-row md:gap-16 lg:gap-24">
+        {/* ── Nadpis (mobil) ── */}
+        <h1
+          className="lg:hidden text-3xl font-thin uppercase tracking-[0.16em] text-white/85 mb-8"
+          style={{ fontFamily: 'var(--font-exo2)' }}
+        >
+          Můj účet
+        </h1>
 
-        {/* ════════════════════════════════════════
-            LEVÝ SLOUPEC — navigace
-        ════════════════════════════════════════ */}
-        <aside className="md:w-1/3 lg:w-[30%] flex-shrink-0">
+        {/* ── Mobilní tab lišta ── */}
+        <div
+          className="flex lg:hidden gap-1 overflow-x-auto pb-6 mb-10 snap-x"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as React.CSSProperties}
+        >
+          {TABS.map(t => (
+            <button
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className="snap-start shrink-0 px-4 py-2.5 rounded-full bg-transparent cursor-pointer
+                         transition-all duration-300 whitespace-nowrap"
+              style={{
+                fontFamily:    'var(--font-montserrat)',
+                fontSize:      '9px',
+                letterSpacing: '0.3em',
+                textTransform: 'uppercase',
+                color:         tab === t.id ? '#c7a04b' : 'rgba(255,255,255,0.30)',
+                border:        tab === t.id
+                  ? '1px solid rgba(199,160,75,0.35)'
+                  : '1px solid rgba(255,255,255,0.08)',
+              }}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
 
-          {/* Nadpis */}
-          <h1
-            className="hidden md:block text-3xl lg:text-4xl font-thin uppercase tracking-[0.18em] text-white/90 mb-10"
-            style={{ fontFamily: 'var(--font-exo2)' }}
-          >
-            Můj účet
-          </h1>
+        {/* ── Desktop grid 12 sloupců ── */}
+        <div className="lg:grid lg:grid-cols-12 lg:gap-6">
 
-          {/* Mobilní scrollovací lišta záložek */}
-          <div
-            className="flex md:hidden gap-6 overflow-x-auto pb-4 mb-8"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
-            {TABS.map(t => (
-              <button
-                key={t.id}
-                onClick={() => setTab(t.id)}
-                className="shrink-0 pb-2 bg-transparent border-0 cursor-pointer transition-colors duration-300"
-                style={{
-                  fontFamily:    'var(--font-montserrat)',
-                  fontSize:      '10px',
-                  letterSpacing: '0.32em',
-                  textTransform: 'uppercase',
-                  color:         tab === t.id ? '#c7a04b' : 'rgba(255,255,255,0.35)',
-                  borderBottom:  tab === t.id ? '1px solid rgba(199,160,75,0.5)' : '1px solid transparent',
-                }}
-              >
-                {t.label}
-              </button>
-            ))}
-          </div>
+          {/* ════════════════════════════════════════
+              LEVÝ SLOUPEC — navigace (desktop only)
+          ════════════════════════════════════════ */}
+          <aside className="hidden lg:flex lg:col-span-3 flex-col">
 
-          {/* Desktop svislé menu */}
-          <nav className="hidden md:flex flex-col gap-1">
-            {TABS.map(t => (
-              <button
-                key={t.id}
-                onClick={() => setTab(t.id)}
-                className="group flex items-center justify-between text-left bg-transparent border-0
-                           cursor-pointer py-4 transition-all duration-300"
-                style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}
-              >
-                <span
-                  className="text-[13px] uppercase tracking-[0.28em] transition-colors duration-300"
-                  style={{
-                    fontFamily: 'var(--font-montserrat)',
-                    color: tab === t.id ? '#c7a04b' : 'rgba(255,255,255,0.38)',
-                  }}
-                >
-                  {t.label}
-                </span>
-                <ChevronRight
-                  size={14}
-                  className="transition-all duration-300"
-                  style={{
-                    color:   tab === t.id ? '#c7a04b' : 'transparent',
-                    opacity: tab === t.id ? 1 : 0,
-                    transform: tab === t.id ? 'translateX(0)' : 'translateX(-4px)',
-                  }}
-                />
-              </button>
-            ))}
-          </nav>
+            <h1
+              className="text-4xl font-thin uppercase tracking-[0.16em] text-white/85 mb-14"
+              style={{ fontFamily: 'var(--font-exo2)' }}
+            >
+              Můj účet
+            </h1>
 
-          {/* Odhlásit se — desktop */}
-          <button
-            onClick={() => signOut(() => router.push('/'))}
-            className="hidden md:flex items-center gap-2 mt-12 bg-transparent border-0 cursor-pointer p-0
-                       uppercase tracking-[0.32em] transition-colors duration-300
-                       text-white/20 hover:text-red-400/60"
-            style={{ fontFamily: 'var(--font-montserrat)', fontSize: '9px' }}
-          >
-            <span>Odhlásit se</span>
-            <span style={{ fontSize: '10px' }}>→</span>
-          </button>
+            {/* Tenká zlatá linka */}
+            <div
+              className="w-8 h-px mb-10"
+              style={{ background: 'linear-gradient(to right, rgba(199,160,75,0.5), transparent)' }}
+            />
 
-        </aside>
+            {/* Nav položky */}
+            <nav className="flex flex-col">
+              {TABS.map(t => {
+                const isActive = tab === t.id
+                return (
+                  <button
+                    key={t.id}
+                    onClick={() => setTab(t.id)}
+                    className="group relative flex items-center text-left bg-transparent border-0
+                               cursor-pointer py-5 pl-5 pr-3 transition-all duration-300"
+                  >
+                    {/* Zlatá linka vlevo — aktivní */}
+                    <span
+                      className="absolute left-0 top-1/2 -translate-y-1/2 w-[2px] transition-all duration-300"
+                      style={{
+                        height:     isActive ? '60%' : '0%',
+                        background: '#c7a04b',
+                        opacity:    isActive ? 1 : 0,
+                      }}
+                    />
+                    <span
+                      className="text-[11px] uppercase tracking-[0.32em] transition-colors duration-300"
+                      style={{
+                        fontFamily: 'var(--font-montserrat)',
+                        color: isActive
+                          ? '#c7a04b'
+                          : 'rgba(255,255,255,0.28)',
+                      }}
+                    >
+                      {t.label}
+                    </span>
+                  </button>
+                )
+              })}
+            </nav>
 
-        {/* ════════════════════════════════════════
-            PRAVÝ SLOUPEC — obsah
-        ════════════════════════════════════════ */}
-        <section className="flex-1 min-w-0">
+            {/* Oddělovač */}
+            <div
+              className="my-8 h-px"
+              style={{ background: 'rgba(255,255,255,0.05)' }}
+            />
 
-          {/* Tenká zlatá linka nahoře — desktop */}
-          <div
-            className="hidden md:block w-full h-px mb-12"
-            style={{ background: 'linear-gradient(to right, rgba(199,160,75,0.2), transparent)' }}
-          />
+            {/* Odhlásit se */}
+            <button
+              onClick={() => signOut(() => router.push('/'))}
+              className="flex items-center gap-2.5 bg-transparent border-0 cursor-pointer p-0 pl-5
+                         transition-colors duration-300 text-white/20 hover:text-red-400/50"
+              style={{ fontFamily: 'var(--font-montserrat)', fontSize: '9px', letterSpacing: '0.3em', textTransform: 'uppercase' }}
+            >
+              <LogOut size={11} />
+              <span>Odhlásit se</span>
+            </button>
 
-          {/* ── OSOBNÍ ÚDAJE ── */}
-          {tab === 'osobni' && (
-            <div>
-              <p
-                className="text-[10px] uppercase tracking-[0.42em] mb-10 text-white/30"
-                style={{ fontFamily: 'var(--font-montserrat)' }}
-              >
-                Osobní údaje
-              </p>
+          </aside>
 
-              {/* Jméno + Příjmení vedle sebe */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
-                <Field label="Jméno"    value={firstName} />
-                <Field label="Příjmení" value={lastName}  />
-              </div>
+          {/* ════════════════════════════════════════
+              PRAVÝ SLOUPEC — obsah
+          ════════════════════════════════════════ */}
+          <section className="lg:col-span-8 lg:col-start-5">
 
-              {/* E-mail přes celou šířku */}
-              <div className="mb-8">
-                <Field label="E-mail" value={email} />
-              </div>
+            {/* Zlatá linka nahoře */}
+            <div
+              className="hidden lg:block w-full h-px mb-14"
+              style={{ background: 'linear-gradient(to right, rgba(199,160,75,0.18), transparent)' }}
+            />
 
-              {/* Poznámka */}
-              <p
-                className="text-[10px] tracking-[0.15em] mt-8"
-                style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(255,255,255,0.18)' }}
-              >
-                Pro změnu údajů nás prosím kontaktujte na{' '}
-                <span style={{ color: 'rgba(199,160,75,0.5)' }}>info@bases.cz</span>
-              </p>
-            </div>
-          )}
+            <AnimatePresence mode="wait">
 
-          {/* ── HISTORIE OBJEDNÁVEK ── */}
-          {tab === 'objednavky' && (
-            <EmptyState text="Zatím nemáte žádné objednávky" />
-          )}
+              {/* ── OSOBNÍ ÚDAJE ── */}
+              {tab === 'osobni' && (
+                <motion.div key="osobni"
+                  initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.4, ease }}>
 
-          {/* ── DODACÍ ADRESY ── */}
-          {tab === 'adresy' && (
-            <EmptyState text="Zatím nemáte uložené žádné adresy" />
-          )}
+                  {/* Eyebrow sekce */}
+                  <p
+                    className="text-[8px] uppercase tracking-[0.45em] mb-10"
+                    style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(199,160,75,0.55)' }}
+                  >
+                    — Základní údaje
+                  </p>
 
-          {/* Odhlásit se — mobil */}
-          <button
-            onClick={() => signOut(() => router.push('/'))}
-            className="flex md:hidden items-center gap-2 mt-14 bg-transparent border-0 cursor-pointer p-0
-                       uppercase tracking-[0.32em] transition-colors duration-300
-                       text-white/20 hover:text-red-400/60"
-            style={{ fontFamily: 'var(--font-montserrat)', fontSize: '9px' }}
-          >
-            <span>Odhlásit se</span>
-            <span style={{ fontSize: '10px' }}>→</span>
-          </button>
+                  {/* Jméno + Příjmení */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
+                    <Field label="Jméno"    value={firstName} />
+                    <Field label="Příjmení" value={lastName}  />
+                  </div>
 
-        </section>
+                  {/* E-mail */}
+                  <div className="mb-8">
+                    <Field label="E-mail" value={email} />
+                  </div>
 
+                  {/* Ghost tlačítko */}
+                  <button
+                    type="button"
+                    className="mt-8 px-8 py-3 rounded-full uppercase tracking-[0.28em] text-[10px]
+                               transition-all duration-300
+                               hover:border-[#c7a04b]/50 hover:text-[#c7a04b]/70
+                               text-white/30"
+                    style={{
+                      fontFamily: 'var(--font-montserrat)',
+                      border: '1px solid rgba(255,255,255,0.12)',
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.borderColor = 'rgba(199,160,75,0.45)'
+                      e.currentTarget.style.color       = 'rgba(199,160,75,0.7)'
+                      e.currentTarget.style.boxShadow   = '0 0 18px rgba(199,160,75,0.08)'
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'
+                      e.currentTarget.style.color       = 'rgba(255,255,255,0.30)'
+                      e.currentTarget.style.boxShadow   = 'none'
+                    }}
+                  >
+                    Upravit údaje
+                  </button>
+
+                  {/* Poznámka */}
+                  <p
+                    className="text-[9px] tracking-[0.14em] mt-6"
+                    style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(255,255,255,0.15)' }}
+                  >
+                    Pro změnu kontaktujte{' '}
+                    <span style={{ color: 'rgba(199,160,75,0.4)' }}>info@bases.cz</span>
+                  </p>
+
+                </motion.div>
+              )}
+
+              {/* ── HISTORIE OBJEDNÁVEK ── */}
+              {tab === 'objednavky' && (
+                <motion.div key="objednavky"
+                  initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.4, ease }}>
+                  <p
+                    className="text-[8px] uppercase tracking-[0.45em] mb-10"
+                    style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(199,160,75,0.55)' }}
+                  >
+                    — Historie objednávek
+                  </p>
+                  <EmptyState icon={Package} text="Zatím nemáte žádné objednávky" />
+                </motion.div>
+              )}
+
+              {/* ── DODACÍ ADRESY ── */}
+              {tab === 'adresy' && (
+                <motion.div key="adresy"
+                  initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.4, ease }}>
+                  <p
+                    className="text-[8px] uppercase tracking-[0.45em] mb-10"
+                    style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(199,160,75,0.55)' }}
+                  >
+                    — Dodací adresy
+                  </p>
+                  <EmptyState icon={MapPin} text="Zatím nemáte uložené žádné adresy" />
+                </motion.div>
+              )}
+
+            </AnimatePresence>
+
+            {/* Odhlásit se — mobil */}
+            <button
+              onClick={() => signOut(() => router.push('/'))}
+              className="flex lg:hidden items-center gap-2.5 mt-16 bg-transparent border-0 cursor-pointer p-0
+                         transition-colors duration-300 text-white/20 hover:text-red-400/50"
+              style={{ fontFamily: 'var(--font-montserrat)', fontSize: '9px', letterSpacing: '0.3em', textTransform: 'uppercase' }}
+            >
+              <LogOut size={11} />
+              <span>Odhlásit se</span>
+            </button>
+
+          </section>
+
+        </div>
       </div>
     </main>
   )
