@@ -170,11 +170,13 @@ export default function ObjednavkaPage() {
   // ── Přihlas uživatele: předvyplň formulář ──────────────────────────────
   useEffect(() => {
     if (!isLoaded || !user) return
+    const savedPhone = (user.unsafeMetadata as { phone?: string }).phone ?? ''
     setForm(prev => ({
       ...prev,
       jmeno:    user.firstName ?? prev.jmeno,
       prijmeni: user.lastName  ?? prev.prijmeni,
       email:    user.primaryEmailAddress?.emailAddress ?? prev.email,
+      telefon:  savedPhone || prev.telefon,
     }))
   }, [isLoaded, user])
 
@@ -276,6 +278,10 @@ export default function ObjednavkaPage() {
             password,
           })
           if (signUpErr) throw signUpErr
+          // Ulož telefon do unsafeMetadata nového účtu
+          if (form.telefon) {
+            try { await signUp.update({ unsafeMetadata: { phone: form.telefon } }) } catch { /* silent */ }
+          }
           if (signUp.status === 'complete') {
             setAccountMsg('Účet byl vytvořen! Přihlašuji vás…')
             router.push('/ucet/profil')

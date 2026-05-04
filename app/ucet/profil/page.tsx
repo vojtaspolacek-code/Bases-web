@@ -114,6 +114,7 @@ function TabOsobni({ user }: { user: NonNullable<ReturnType<typeof useUser>['use
   const [isEditing,  setIsEditing]  = useState(false)
   const [firstName,  setFirstName]  = useState(user.firstName ?? '')
   const [lastName,   setLastName]   = useState(user.lastName  ?? '')
+  const [phone,      setPhone]      = useState((user.unsafeMetadata as { phone?: string }).phone ?? '')
   const [saving,     setSaving]     = useState(false)
   const [error,      setError]      = useState('')
   const email = user.primaryEmailAddress?.emailAddress ?? ''
@@ -121,7 +122,11 @@ function TabOsobni({ user }: { user: NonNullable<ReturnType<typeof useUser>['use
   const handleSave = async () => {
     setSaving(true); setError('')
     try {
-      await user.update({ firstName, lastName })
+      await user.update({
+        firstName,
+        lastName,
+        unsafeMetadata: { ...user.unsafeMetadata, phone },
+      })
       setIsEditing(false)
     } catch {
       setError('Uložení se nezdařilo. Zkuste to znovu.')
@@ -131,9 +136,12 @@ function TabOsobni({ user }: { user: NonNullable<ReturnType<typeof useUser>['use
   const handleCancel = () => {
     setFirstName(user.firstName ?? '')
     setLastName(user.lastName   ?? '')
+    setPhone((user.unsafeMetadata as { phone?: string }).phone ?? '')
     setError('')
     setIsEditing(false)
   }
+
+  const savedPhone = (user.unsafeMetadata as { phone?: string }).phone ?? ''
 
   return (
     <div>
@@ -151,8 +159,9 @@ function TabOsobni({ user }: { user: NonNullable<ReturnType<typeof useUser>['use
               <Field label="Jméno"    value={user.firstName ?? ''} />
               <Field label="Příjmení" value={user.lastName  ?? ''} />
             </div>
-            <div className="mb-10">
-              <Field label="E-mail" value={email} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-10">
+              <Field label="E-mail"  value={email} />
+              <Field label="Telefon" value={savedPhone || 'Není zadán'} />
             </div>
             <GhostBtn onClick={() => setIsEditing(true)}>Upravit údaje</GhostBtn>
           </motion.div>
@@ -164,8 +173,9 @@ function TabOsobni({ user }: { user: NonNullable<ReturnType<typeof useUser>['use
               <EditInput label="Jméno"    value={firstName} onChange={setFirstName} />
               <EditInput label="Příjmení" value={lastName}  onChange={setLastName}  />
             </div>
-            <div className="mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-10">
               <EditInput label="E-mail (nelze změnit)" value={email} readOnly />
+              <EditInput label="Telefon" value={phone} onChange={setPhone} />
             </div>
 
             {error && (
