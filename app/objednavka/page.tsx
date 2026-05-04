@@ -600,19 +600,12 @@ export default function ObjednavkaPage() {
               <p className="text-[#c7a04b] text-[9px] tracking-[0.4em] uppercase mb-6"
                 style={{ fontFamily: 'var(--font-montserrat)' }}>Vaše objednávka</p>
 
-              <div style={{ position: 'relative' }}>
-                <div style={{
-                  maxHeight: '280px', overflowY: 'auto', marginBottom: '16px',
-                  paddingRight: '4px', scrollbarWidth: 'thin',
-                  scrollbarColor: 'rgba(199,160,75,0.3) transparent',
-                }}>
-                  {OrderItems}
-                </div>
-                <div style={{
-                  position: 'absolute', bottom: '16px', left: 0, right: '4px',
-                  height: '48px', pointerEvents: 'none',
-                  background: 'linear-gradient(to bottom, transparent, rgba(10,10,10,0.95))',
-                }} />
+              <div style={{
+                maxHeight: '280px', overflowY: 'auto', marginBottom: '16px',
+                paddingRight: '4px', scrollbarWidth: 'thin',
+                scrollbarColor: 'rgba(199,160,75,0.3) transparent',
+              }}>
+                {OrderItems}
               </div>
 
               <div className="h-px my-6" style={{ background: 'rgba(199,160,75,0.2)' }} />
