@@ -108,7 +108,7 @@ export default function Header() {
     <>
       <header
         className={`fixed top-0 left-0 w-full pointer-events-none
-                   bg-gradient-to-b from-[#0a0a0a] via-black/50 to-transparent
+                   bg-gradient-to-b from-black via-black/50 to-transparent
                    ${isHome ? 'pb-28' : 'pb-28 md:pb-6'}`}
         style={{ zIndex: 9999 }}
       >
@@ -117,29 +117,29 @@ export default function Header() {
           /* Hlavní stránka — beze změny */
           <div
             className="absolute top-0 left-0 w-full h-[200px] -z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(to bottom, rgba(10,10,10,1) 0%, rgba(10,10,10,0.8) 40%, rgba(10,10,10,0) 100%)' }}
+            style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0) 100%)' }}
           />
         ) : isProductPage ? (
           <>
             {/* Produktové podstránky — MOBIL: fade začíná pod nav barem */}
             <div
               className="absolute left-0 w-full h-10 pointer-events-none md:hidden"
-              style={{ top: '84px', background: 'linear-gradient(to bottom, #0a0a0a, transparent)', zIndex: -10 }}
+              style={{ top: '84px', background: 'linear-gradient(to bottom, #000000, transparent)', zIndex: -10 }}
             />
             {/* Produktové podstránky — DESKTOP: beze změny */}
             <div
               className="absolute left-0 w-full h-24 -z-10 pointer-events-none hidden md:block top-[10px]"
-              style={{ background: 'linear-gradient(to bottom, #0a0a0a 0%, #0a0a0a 45%, rgba(10,10,10,0.75) 72%, transparent 100%)' }}
+              style={{ background: 'linear-gradient(to bottom, #000000 0%, #000000 45%, rgba(0,0,0,0.75) 72%, transparent 100%)' }}
             />
           </>
         ) : (
           /* Ostatní podstránky (o-nas, kontakt…) — původní chování */
           <div
             className="absolute top-0 left-0 w-full h-20 -z-10 pointer-events-none md:top-[10px] md:h-24"
-            style={{ background: 'linear-gradient(to bottom, #0a0a0a 0%, #0a0a0a 45%, rgba(10,10,10,0.75) 72%, transparent 100%)' }}
+            style={{ background: 'linear-gradient(to bottom, #000000 0%, #000000 45%, rgba(0,0,0,0.75) 72%, transparent 100%)' }}
           />
         )}
-        <div className={`pointer-events-auto px-6 md:px-8 lg:px-14 py-5${isProductPage ? ' bg-[#0a0a0a] md:bg-transparent' : ''}`}>
+        <div className={`pointer-events-auto px-6 md:px-8 lg:px-14 py-5${isProductPage ? ' bg-black md:bg-transparent' : ''}`}>
 
           {/* ── DESKTOP layout: logo vlevo | nav střed | košík vpravo ── */}
           <div className="hidden md:grid grid-cols-3 items-center">
