@@ -4,7 +4,7 @@ import Link from 'next/link'
 const SOCIAL = [
   { label: 'Instagram', href: 'https://www.instagram.com/bases.official' },
   { label: 'TikTok',    href: 'https://www.tiktok.com/@bases.official'   },
-  { label: 'Facebook',  href: 'https://facebook.com'                     },
+  { label: 'Facebook',  href: 'https://www.facebook.com/profile.php?id=61588261719759' },
 ]
 const LEGAL = [
   { label: 'Podmínky', href: '/podminky' },
