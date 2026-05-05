@@ -55,7 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-transparent text-white font-sans">
         <CartProvider>
           <Header />
-          <main className="relative z-0 pt-[100px] md:pt-0">
+          <main className="relative pt-[100px] md:pt-0">
             {children}
           </main>
           <CartDrawer />
