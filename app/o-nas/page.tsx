@@ -26,8 +26,31 @@ function Card({ entry, delay=0, isMobile=false }: { entry: typeof TIMELINE[numbe
         className="relative w-full overflow-hidden"
         style={{
           padding: '2rem 1.75rem',
-          borderTop: '1px solid rgba(199,160,75,0.18)',
         }}>
+
+        {/* Dekorativní linka s diamantem */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 0,
+          pointerEvents: 'none',
+        }}>
+          <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to right, transparent, rgba(199,160,75,0.35))' }} />
+          <div style={{
+            width: '5px',
+            height: '5px',
+            background: GOLD,
+            opacity: 0.7,
+            transform: 'rotate(45deg)',
+            flexShrink: 0,
+            margin: '0 6px',
+          }} />
+          <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to left, transparent, rgba(199,160,75,0.35))' }} />
+        </div>
 
         {/* Watermark číslo */}
         <span aria-hidden style={{
@@ -223,8 +246,8 @@ export default function Onas() {
                 style={{
                   padding: '1.1rem 1.5rem',
                   border: '1px solid rgba(199,160,75,0.35)',
-                  borderRadius: '2px',
-                  background: 'transparent',
+                  borderRadius: '100px',
+                  background: 'rgba(199,160,75,0.04)',
                 }}
               >
                 <span style={{
