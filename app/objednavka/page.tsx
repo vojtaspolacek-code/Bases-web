@@ -10,11 +10,11 @@ import { Check, MapPin } from 'lucide-react'
 
 // ── Sdílená třída pro inputy ─────────────────────────────────────────────────
 const INPUT_CLS = [
-  'w-full bg-transparent border-b text-white/85 text-[0.9rem]',
-  'outline-none transition-all duration-300 py-2.5',
-  'placeholder:text-white/15',
-  'hover:border-white/20',
-  'focus:border-[#c7a04b]',
+  'w-full bg-transparent border-0 border-b border-white/10 text-white/85 text-[0.9rem]',
+  'outline-none ring-0 transition-colors duration-300 py-2.5',
+  'placeholder:text-white/20',
+  'hover:border-[#c7a04b]/60',
+  'focus:border-[#c7a04b] focus:outline-none focus:ring-0',
 ].join(' ')
 
 const LABEL_CLS = 'block text-[9px] tracking-[0.38em] uppercase mb-2'
@@ -88,7 +88,7 @@ function Field({
       <input
         type={type} name={name} value={value} onChange={onChange}
         placeholder={placeholder} autoComplete="off" readOnly={readOnly}
-        className={`${INPUT_CLS} ${submitted && error ? 'border-[#c7a04b]/70' : 'border-white/8'} ${readOnly ? 'opacity-50 cursor-default' : ''}`}
+        className={`${INPUT_CLS} ${submitted && error ? '!border-[#c7a04b]/70' : ''} ${readOnly ? 'opacity-50 cursor-default' : ''}`}
         style={{ fontFamily: 'var(--font-montserrat)' }}
       />
       {submitted && error && (
@@ -472,7 +472,7 @@ export default function ObjednavkaPage() {
                     type="text" name="ulice" value={form.ulice} onChange={handleChange}
                     placeholder="Začněte psát adresu…"
                     autoComplete="off" data-lpignore="true" data-form-type="other"
-                    className={`${INPUT_CLS} ${submitted && errors.ulice ? 'border-[#c7a04b]/70' : 'border-white/8'}`}
+                    className={`${INPUT_CLS} ${submitted && errors.ulice ? '!border-[#c7a04b]/70' : ''}`}
                     style={{ fontFamily: 'var(--font-montserrat)' }}
                   />
                   {submitted && errors.ulice && (
@@ -490,7 +490,7 @@ export default function ObjednavkaPage() {
                     style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(199,160,75,0.55)' }}>
                     Stát
                   </label>
-                  <div className="border-b border-white/10 py-2.5 text-white/30 text-[0.9rem] cursor-not-allowed"
+                  <div className="border-b border-white/8 py-2.5 text-white/30 text-[0.9rem] cursor-not-allowed"
                     style={{ fontFamily: 'var(--font-montserrat)' }}>
                     Česká republika
                   </div>
@@ -560,7 +560,7 @@ export default function ObjednavkaPage() {
                           value={password}
                           onChange={e => { setPassword(e.target.value); setPwError('') }}
                           placeholder="min. 8 znaků"
-                          className={`${INPUT_CLS} ${pwError ? 'border-[#c7a04b]/70' : 'border-white/8'}`}
+                          className={`${INPUT_CLS} ${pwError ? '!border-[#c7a04b]/70' : ''}`}
                           style={{ fontFamily: 'var(--font-montserrat)' }}
                         />
                         {pwError && (
