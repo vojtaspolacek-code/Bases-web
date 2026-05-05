@@ -15,7 +15,7 @@ const TIMELINE = [
   { id:'04', side:'right' as const, label:'NAŠE VIZE', body:'Chceme tento fenomén v Česku znormalizovat. Zpřístupnit pravou Ameriku každému, kdo chce zažít tu stejnou pohodu, jakou jsme u těch prvních dvaceti sáčků zažili my.' },
 ]
 
-function Card({ entry, delay=0, isMobile=false }: { entry: typeof TIMELINE[number]; delay?: number; isMobile?: boolean }) {
+function Card({ entry, delay=0, isMobile=false, isLeft=true }: { entry: typeof TIMELINE[number]; delay?: number; isMobile?: boolean; isLeft?: boolean }) {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-10% 0px' })
 
@@ -60,24 +60,31 @@ function Card({ entry, delay=0, isMobile=false }: { entry: typeof TIMELINE[numbe
     )
   }
 
-  // Desktop karta — glassmorphism
+  // Desktop karta — editorial fullwidth
   return (
-    <motion.div ref={ref} initial={{ opacity:0, y:28 }} animate={inView ? { opacity:1, y:0 } : {}}
-      transition={{ duration:0.8, delay, ease }} className="w-full max-w-[420px] p-8 lg:p-10"
+    <motion.div ref={ref}
+      initial={{ opacity: 0, x: isLeft ? -32 : 32 }}
+      animate={inView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.9, delay, ease }}
       style={{
-        background: 'rgba(255,255,255,0.03)',
-        border: '1px solid rgba(199,160,75,0.15)',
-        borderRadius: '2px',
-        backdropFilter: 'blur(8px)',
-        boxShadow: '0 0 40px rgba(199,160,75,0.04), inset 0 0 0 1px rgba(255,255,255,0.03)',
+        position: 'relative',
+        zIndex: 1,
+        width: '100%',
+        maxWidth: '520px',
+        padding: 'clamp(3rem, 6vw, 5rem) clamp(3rem, 8vw, 8rem)',
+        marginLeft: isLeft ? 0 : 'auto',
+        marginRight: isLeft ? 'auto' : 0,
       }}>
-      <div style={{ width:'20px', height:'1px', background:GOLD, opacity:0.7, marginBottom:'1rem' }} />
-      <p className="text-[10px] font-medium uppercase mb-5"
-        style={{ fontFamily:'var(--font-montserrat)', letterSpacing:'0.44em', color:GOLD }}>
-        {entry.label}
-      </p>
-      <p className="text-sm font-light leading-[1.9]"
-        style={{ fontFamily:'var(--font-montserrat)', color:'rgba(255,255,255,0.62)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+        <span style={{ fontFamily: 'var(--font-montserrat)', fontSize: '10px', letterSpacing: '0.4em', color: 'rgba(199,160,75,0.5)', fontWeight: 400 }}>
+          {entry.id}
+        </span>
+        <div style={{ width: '28px', height: '1px', background: GOLD, opacity: 0.5 }} />
+        <span style={{ fontFamily: 'var(--font-montserrat)', fontSize: '10px', letterSpacing: '0.44em', textTransform: 'uppercase', color: GOLD, fontWeight: 500 }}>
+          {entry.label}
+        </span>
+      </div>
+      <p style={{ fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(0.95rem, 1.1vw, 1.1rem)', fontWeight: 300, lineHeight: 1.9, color: 'rgba(255,255,255,0.68)', letterSpacing: '0.01em' }}>
         {entry.body}
       </p>
     </motion.div>
@@ -136,63 +143,21 @@ export default function Onas() {
       </section>
 
       {/* ── TIMELINE SEKCE ── */}
-      <section className="relative py-16 md:py-[clamp(6rem,12vw,14rem)]">
-        {!isMobile && (
-          <div aria-hidden className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 pointer-events-none"
-            style={{ background:'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.10) 8%, rgba(255,255,255,0.10) 92%, transparent 100%)' }} />
-        )}
+      <section className="relative py-16 md:py-24">
 
-        <div className={`mx-auto ${isMobile ? 'px-0' : 'max-w-[1100px] px-5 md:px-[clamp(1.5rem,4vw,3rem)]'}`}>
-          {TIMELINE.map((entry, i) => {
-            const isLeft = entry.side === 'left'
-            const isLast = i === TIMELINE.length - 1
-
-            if (isMobile) return (
-              <div key={entry.id} className="w-full"
-                style={{ borderBottom: isLast ? 'none' : '1px solid rgba(255,255,255,0.03)' }}>
-                <Card entry={entry} delay={0.1} isMobile={true} />
-              </div>
-            )
-
-            return (
-              <div key={entry.id} className="relative flex items-center"
-                style={{ marginBottom: isLast ? 0 : 'clamp(3rem,5vw,5rem)' }}>
-                <span aria-hidden className="absolute pointer-events-none select-none"
-                  style={{ top:'50%', transform:'translateY(-50%)', left: isLeft ? '1%' : 'auto', right: isLeft ? 'auto' : '1%', fontFamily:'var(--font-exo2)', fontWeight:700, fontSize:'clamp(11rem,19vw,18rem)', lineHeight:1, letterSpacing:'-0.04em', color:GOLD, opacity:0.10, zIndex:0 }}>
-                  {entry.id}
-                </span>
-
-                {/* Spojovací linka karta → tečka */}
-                {isLeft && (
-                  <div aria-hidden className="absolute z-[5] pointer-events-none"
-                    style={{ left:'calc(50% - clamp(2.5rem,5vw,5rem))', right:'50%', top:'50%', transform:'translateY(-50%)', height:'1px', background:'linear-gradient(to right, transparent, rgba(199,160,75,0.25))' }} />
-                )}
-                {!isLeft && (
-                  <div aria-hidden className="absolute z-[5] pointer-events-none"
-                    style={{ left:'50%', right:'calc(50% - clamp(2.5rem,5vw,5rem))', top:'50%', transform:'translateY(-50%)', height:'1px', background:'linear-gradient(to left, transparent, rgba(199,160,75,0.25))' }} />
-                )}
-
-                <motion.div aria-hidden className="absolute left-1/2 -translate-x-1/2 rounded-full z-10"
-                  style={{ width:11, height:11, background:GOLD }}
-                  animate={{ boxShadow: [
-                    '0 0 0 3px rgba(199,160,75,0.15), 0 0 18px 6px rgba(199,160,75,0.2)',
-                    '0 0 0 6px rgba(199,160,75,0.05), 0 0 28px 10px rgba(199,160,75,0.35)',
-                    '0 0 0 3px rgba(199,160,75,0.15), 0 0 18px 6px rgba(199,160,75,0.2)',
-                  ]}}
-                  transition={{ duration:2.5, repeat:Infinity, ease:'easeInOut' }} />
-
-                <div className="w-1/2 flex justify-end" style={{ paddingRight:'clamp(2.5rem,5vw,5rem)' }}>
-                  {isLeft && <Card entry={entry} delay={0.15} />}
+        {/* ── MOBIL ── */}
+        {isMobile && (
+          <div className="px-0">
+            {TIMELINE.map((entry, i) => {
+              const isLast = i === TIMELINE.length - 1
+              return (
+                <div key={entry.id} className="w-full"
+                  style={{ borderBottom: isLast ? 'none' : '1px solid rgba(255,255,255,0.03)' }}>
+                  <Card entry={entry} delay={0.1} isMobile={true} />
                 </div>
-                <div className="w-1/2 flex justify-start overflow-hidden" style={{ paddingLeft:'clamp(2.5rem,5vw,5rem)' }}>
-                  {!isLeft && <Card entry={entry} delay={0.15} />}
-                </div>
-              </div>
-            )
-          })}
-
-          {/* CTA tlačítko — pouze mobil, plná šířka, zlaté pozadí */}
-          {isMobile && (
+              )
+            })}
+            {/* CTA tlačítko — pouze mobil */}
             <div className="mt-16 mb-8 px-6">
               <Link
                 href="/slunecnicova-seminka"
@@ -210,8 +175,44 @@ export default function Onas() {
                 Prozkoumat kolekci <span className="text-lg">→</span>
               </Link>
             </div>
-          )}
-        </div>
+          </div>
+        )}
+
+        {/* ── DESKTOP — editorial fullwidth ── */}
+        {!isMobile && (
+          <div style={{ width: '100%' }}>
+            {TIMELINE.map((entry, i) => {
+              const isLeft = entry.side === 'left'
+              const isLast = i === TIMELINE.length - 1
+              return (
+                <section key={entry.id} className="relative w-full flex items-center overflow-hidden"
+                  style={{ minHeight: '38vh', borderBottom: isLast ? 'none' : '1px solid rgba(199,160,75,0.08)' }}>
+
+                  {/* Obří watermark číslo */}
+                  <span aria-hidden style={{
+                    position: 'absolute',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    ...(isLeft ? { right: '-2rem' } : { left: '-2rem' }),
+                    fontFamily: 'var(--font-exo2)',
+                    fontWeight: 700,
+                    fontSize: 'clamp(14rem, 22vw, 20rem)',
+                    lineHeight: 1,
+                    letterSpacing: '-0.05em',
+                    color: GOLD,
+                    opacity: 0.045,
+                    pointerEvents: 'none',
+                    userSelect: 'none',
+                    zIndex: 0,
+                  }}>{entry.id}</span>
+
+                  <Card entry={entry} isLeft={isLeft} delay={0.15} />
+                </section>
+              )
+            })}
+          </div>
+        )}
+
       </section>
 
     </main>
