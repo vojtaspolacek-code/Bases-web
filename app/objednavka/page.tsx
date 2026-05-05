@@ -490,8 +490,8 @@ export default function ObjednavkaPage() {
                     style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(199,160,75,0.55)' }}>
                     Stát
                   </label>
-                  <div className="border-b border-white/8 py-2.5 text-white/30 text-[0.9rem] cursor-not-allowed"
-                    style={{ fontFamily: 'var(--font-montserrat)' }}>
+                  <div className="py-2.5 text-white/30 text-[0.9rem] cursor-not-allowed"
+                    style={{ fontFamily: 'var(--font-montserrat)', borderBottom: '1px solid rgba(255,255,255,0.10)' }}>
                     Česká republika
                   </div>
                   <p className="text-[10px] text-white/18 mt-1.5 tracking-[0.02em]"
