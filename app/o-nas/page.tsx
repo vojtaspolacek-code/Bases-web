@@ -21,40 +21,57 @@ function Card({ entry, delay=0, isMobile=false }: { entry: typeof TIMELINE[numbe
 
   if (isMobile) {
     return (
-      <motion.div ref={ref} initial={{ opacity:0, y:30 }} animate={inView ? { opacity:1, y:0 } : {}}
-        transition={{ duration:0.8, delay, ease }} className="relative w-full py-12 px-6 overflow-hidden">
+      <motion.div ref={ref} initial={{ opacity:0, y:24 }} animate={inView ? { opacity:1, y:0 } : {}}
+        transition={{ duration:0.75, delay, ease }}
+        className="relative w-full overflow-hidden"
+        style={{
+          padding: '2rem 1.75rem',
+          borderTop: '1px solid rgba(199,160,75,0.18)',
+        }}>
 
-        {/* Velké vodoznakové číslo do pozadí */}
-        <span aria-hidden className="absolute pointer-events-none select-none"
-          style={{
-            top: '0rem',
-            left: '-1rem',
-            fontFamily: 'var(--font-exo2)',
-            fontWeight: 700,
-            fontSize: '8rem',
-            lineHeight: 0.8,
-            letterSpacing: '-0.04em',
-            color: GOLD,
-            opacity: 0.04,
-            zIndex: 0,
-          }}>
-          {entry.id}
-        </span>
+        {/* Watermark číslo */}
+        <span aria-hidden style={{
+          position: 'absolute',
+          bottom: '-1rem',
+          right: '-0.25rem',
+          fontFamily: 'var(--font-exo2)',
+          fontWeight: 700,
+          fontSize: '7rem',
+          lineHeight: 1,
+          letterSpacing: '-0.04em',
+          color: GOLD,
+          opacity: 0.05,
+          pointerEvents: 'none',
+          userSelect: 'none',
+          zIndex: 0,
+        }}>{entry.id}</span>
 
-        <div className="relative z-10">
-          <div className="flex items-center gap-4 mb-6">
-            {/* Jemná zlatá linka místo borderu */}
-            <div className="w-8 h-[1px]" style={{ backgroundColor: GOLD, opacity: 0.6 }} />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.35em]"
-              style={{ fontFamily: 'var(--font-montserrat)', color: GOLD }}>
-              {entry.label}
-            </p>
+        <div style={{ position: 'relative', zIndex: 1 }}>
+
+          {/* Label řádek */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1rem' }}>
+            <div style={{ width: '20px', height: '1px', background: GOLD, opacity: 0.55 }} />
+            <span style={{
+              fontFamily: 'var(--font-montserrat)',
+              fontSize: '9px',
+              letterSpacing: '0.42em',
+              textTransform: 'uppercase',
+              color: GOLD,
+              fontWeight: 500,
+            }}>{entry.label}</span>
           </div>
 
-          <p className="text-[15px] font-light leading-[1.8] pl-2"
-            style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(255,255,255,0.75)' }}>
-            {entry.body}
-          </p>
+          {/* Text */}
+          <p style={{
+            fontFamily: 'var(--font-montserrat)',
+            fontSize: '0.92rem',
+            fontWeight: 300,
+            lineHeight: 1.9,
+            color: 'rgba(255,255,255,0.68)',
+            letterSpacing: '0.01em',
+            margin: 0,
+          }}>{entry.body}</p>
+
         </div>
       </motion.div>
     )
@@ -189,31 +206,45 @@ export default function Onas() {
         {/* ── MOBIL ── */}
         {isMobile && (
           <div className="px-0">
-            {TIMELINE.map((entry, i) => {
-              const isLast = i === TIMELINE.length - 1
-              return (
-                <div key={entry.id} className="w-full"
-                  style={{ borderBottom: isLast ? 'none' : '1px solid rgba(255,255,255,0.03)' }}>
-                  <Card entry={entry} delay={0.1} isMobile={true} />
-                </div>
-              )
-            })}
+            {TIMELINE.map((entry) => (
+              <div key={entry.id} className="w-full">
+                <Card entry={entry} delay={0.1} isMobile={true} />
+              </div>
+            ))}
             {/* CTA tlačítko — pouze mobil */}
-            <div className="mt-16 mb-8 px-6">
+            <div style={{ marginTop: '3rem', marginBottom: '2rem', paddingLeft: '1.75rem', paddingRight: '1.75rem' }}>
               <Link
                 href="/slunecnicova-seminka"
                 onClick={(e) => {
                   e.preventDefault()
                   window.dispatchEvent(new CustomEvent('openBrandsMenu'))
                 }}
-                className="w-full flex justify-center items-center gap-3 px-8 py-5 rounded-full uppercase tracking-widest text-[0.75rem] font-semibold no-underline transition-all duration-300"
+                className="group flex items-center justify-between w-full no-underline transition-all duration-500"
                 style={{
+                  padding: '1.1rem 1.5rem',
+                  border: '1px solid rgba(199,160,75,0.35)',
+                  borderRadius: '2px',
+                  background: 'transparent',
+                }}
+              >
+                <span style={{
                   fontFamily: 'var(--font-montserrat)',
-                  color: '#080808',
-                  background: GOLD,
-                  boxShadow: '0 4px 20px rgba(199,160,75,0.25)',
+                  fontSize: '10px',
+                  letterSpacing: '0.45em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(199,160,75,0.85)',
+                  fontWeight: 500,
+                  transition: 'color 0.4s ease',
                 }}>
-                Prozkoumat kolekci <span className="text-lg">→</span>
+                  Prozkoumat kolekci
+                </span>
+                <span style={{
+                  color: 'rgba(199,160,75,0.6)',
+                  fontSize: '1rem',
+                  transition: 'transform 0.4s ease, color 0.4s ease',
+                }}>
+                  →
+                </span>
               </Link>
             </div>
           </div>
