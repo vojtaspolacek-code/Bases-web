@@ -398,7 +398,7 @@ export default function ProductReveal({
           BACKDROP
       ════════════════════════════════════════════════════════════ */}
       <div
-        className={`fixed inset-0 z-40 transition-opacity duration-500 bg-black/50 md:bg-transparent
+        className={`fixed inset-0 z-40 transition-opacity duration-500 bg-black/50 md:bg-black/60
                     ${selected ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={handleClose}
       />
