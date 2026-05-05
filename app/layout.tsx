@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Suspense } from 'react'
 import { ClerkProvider } from '@clerk/nextjs'
 import Footer from './components/Footer'
 import { Montserrat, Playfair_Display, Exo_2, Bodoni_Moda, Cinzel } from 'next/font/google'
@@ -59,9 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
           </main>
           <CartDrawer />
-          <Suspense fallback={null}>
-            <Footer />
-          </Suspense>
+          <Footer />
         </CartProvider>
       </body>
     </html>
