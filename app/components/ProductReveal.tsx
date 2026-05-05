@@ -214,6 +214,7 @@ export default function ProductReveal({
               <div
                 key={product.slug}
                 className="flex flex-col items-center cursor-pointer"
+                style={{ position: 'relative' }}
                 onClick={() => handleSelect(product.slug)}
               >
                 {/* Obrázek s glow */}
@@ -584,6 +585,40 @@ export default function ProductReveal({
                     ))}
                   </div>
                 )}
+
+                {/* ━━ SCROLL HINT ━━ */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6, duration: 0.5 }}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '4px',
+                    paddingBottom: '8px',
+                    pointerEvents: 'none',
+                  }}
+                >
+                  <motion.div
+                    animate={{ y: [0, 5, 0] }}
+                    transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+                    style={{
+                      color: 'rgba(199,160,75,0.45)',
+                      fontSize: '16px',
+                      lineHeight: 1,
+                    }}
+                  >
+                    ↓
+                  </motion.div>
+                  <span style={{
+                    fontFamily: 'var(--font-montserrat)',
+                    fontSize: '8px',
+                    letterSpacing: '0.35em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(199,160,75,0.3)',
+                  }}>scroll</span>
+                </motion.div>
 
                 {/* ━━ 2–5. TEXTOVÉ + NÁKUPNÍ PRVKY ━━ */}
                 <div className="px-5 pt-4">
