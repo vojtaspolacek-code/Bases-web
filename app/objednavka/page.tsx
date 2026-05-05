@@ -494,8 +494,8 @@ export default function ObjednavkaPage() {
                     style={{ fontFamily: 'var(--font-montserrat)', borderBottom: '1px solid rgba(255,255,255,0.10)' }}>
                     Česká republika
                   </div>
-                  <p className="text-[10px] text-white/18 mt-1.5 tracking-[0.02em]"
-                    style={{ fontFamily: 'var(--font-montserrat)' }}>
+                  <p className="text-[10px] mt-1.5 tracking-[0.02em]"
+                    style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(255,255,255,0.10)' }}>
                     Aktuálně doručujeme pouze do ČR
                   </p>
                 </div>
