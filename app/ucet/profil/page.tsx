@@ -416,67 +416,7 @@ function TabObjednavky() {
         — Historie objednávek
       </p>
 
-      {/* Mock objednávka */}
-      <div className="p-6 rounded-lg transition-all duration-300"
-        style={{ border: '1px solid rgba(255,255,255,0.07)' }}
-        onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(199,160,75,0.20)')}
-        onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)')}
-      >
-        {/* Hlavička objednávky */}
-        <div className="flex items-start justify-between mb-5">
-          <div>
-            <p className="text-[8px] uppercase tracking-[0.4em] mb-1.5"
-              style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(255,255,255,0.25)' }}>
-              Číslo objednávky
-            </p>
-            <p className="text-lg font-light text-white/90"
-              style={{ fontFamily: 'var(--font-exo2)', letterSpacing: '0.06em' }}>
-              #B-8429
-            </p>
-          </div>
-          {/* Status badge */}
-          <span
-            className="text-[8px] uppercase tracking-[0.35em] px-3 py-1.5 rounded-full"
-            style={{
-              fontFamily:  'var(--font-montserrat)',
-              color:       '#c7a04b',
-              background:  'rgba(199,160,75,0.08)',
-              border:      '1px solid rgba(199,160,75,0.22)',
-            }}
-          >
-            Zpracovává se
-          </span>
-        </div>
-
-        {/* Oddělovač */}
-        <div className="h-px mb-5" style={{ background: 'rgba(255,255,255,0.05)' }} />
-
-        {/* Detaily */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
-          {[
-            { label: 'Datum',      value: '12. května 2026' },
-            { label: 'Celková cena', value: '499 Kč'        },
-            { label: 'Položky',    value: '1× BIGS Original'},
-          ].map(({ label, value }) => (
-            <div key={label}>
-              <p className="text-[8px] uppercase tracking-[0.35em] mb-1.5"
-                style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(255,255,255,0.25)' }}>
-                {label}
-              </p>
-              <p className="text-[0.9rem] font-light text-white/75"
-                style={{ fontFamily: 'var(--font-exo2)', letterSpacing: '0.03em' }}>
-                {value}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <p className="mt-6 text-[9px] tracking-[0.15em]"
-        style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(255,255,255,0.15)' }}>
-        Potřebujete pomoc s objednávkou?{' '}
-        <span style={{ color: 'rgba(199,160,75,0.4)' }}>info@bases.cz</span>
-      </p>
+      <EmptyState icon={Package} text="Zatím žádné objednávky" />
     </div>
   )
 }
