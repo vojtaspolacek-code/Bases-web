@@ -470,7 +470,7 @@ export default function Header() {
               {[
                 { label: 'Instagram', href: 'https://www.instagram.com/bases.official'  },
                 { label: 'TikTok',   href: 'https://www.tiktok.com/@bases.official' },
-                { label: 'Facebook', href: '#'                                        },
+                { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61588261719759' },
               ].map(item => (
                 <a
                   key={item.label}
