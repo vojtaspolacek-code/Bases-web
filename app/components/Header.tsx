@@ -108,7 +108,7 @@ export default function Header() {
     <>
       <header
         className={`fixed top-0 left-0 w-full pointer-events-none
-                   bg-gradient-to-b from-black/90 via-black/50 to-transparent
+                   bg-gradient-to-b from-[#0a0a0a] via-black/50 to-transparent
                    ${isHome ? 'pb-28' : 'pb-28 md:pb-6'}`}
         style={{ zIndex: 9999 }}
       >
