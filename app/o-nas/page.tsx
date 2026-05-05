@@ -189,6 +189,7 @@ export default function Onas() {
           <Image src="/team.jpg" alt="Vojta a Jeňa" fill className="object-cover object-center" priority />
           <div className="absolute inset-0 md:hidden" style={{ background:'rgba(0,0,0,0.58)' }} />
           <div className="hidden md:block absolute inset-0" style={{ background:'linear-gradient(to right, #000000 0%, rgba(0,0,0,0.55) 30%, transparent 60%)' }} />
+          <div className="absolute top-0 left-0 right-0 h-40 md:hidden" style={{ background:'linear-gradient(to bottom, #000000 0%, transparent 100%)' }} />
           <div className="absolute bottom-0 left-0 right-0 h-56" style={{ background:'linear-gradient(to top, #000000, transparent)' }} />
         </div>
         <div className="relative z-10 flex items-center w-full md:w-[52%] px-8 md:pl-[clamp(3rem,7vw,9rem)] md:pr-0">
