@@ -128,14 +128,14 @@ export default function Header() {
             />
             {/* Produktové podstránky — DESKTOP: beze změny */}
             <div
-              className="absolute left-0 w-full h-24 -z-10 pointer-events-none hidden md:block top-[10px]"
+              className="absolute left-0 w-full h-24 -z-10 pointer-events-none hidden md:block top-0"
               style={{ background: 'linear-gradient(to bottom, #000000 0%, #000000 45%, rgba(0,0,0,0.75) 72%, transparent 100%)' }}
             />
           </>
         ) : (
           /* Ostatní podstránky (o-nas, kontakt…) — původní chování */
           <div
-            className="absolute top-0 left-0 w-full h-20 -z-10 pointer-events-none md:top-[10px] md:h-24"
+            className="absolute top-0 left-0 w-full h-24 -z-10 pointer-events-none"
             style={{ background: 'linear-gradient(to bottom, #000000 0%, #000000 45%, rgba(0,0,0,0.75) 72%, transparent 100%)' }}
           />
         )}
