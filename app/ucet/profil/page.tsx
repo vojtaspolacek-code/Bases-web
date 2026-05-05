@@ -492,7 +492,7 @@ export default function ProfilPage() {
 
   if (!isLoaded) {
     return (
-      <main className="min-h-screen bg-[#070707] flex items-center justify-center">
+      <main className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
         <div className="w-5 h-5 rounded-full border border-[#c7a04b]/30 border-t-[#c7a04b] animate-spin" />
       </main>
     )
@@ -501,7 +501,7 @@ export default function ProfilPage() {
   if (!user) { router.replace('/ucet'); return null }
 
   return (
-    <main className="min-h-screen bg-[#070707] pt-[72px]">
+    <main className="min-h-screen bg-[#0a0a0a] pt-[72px]">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pt-4 md:pt-10 lg:pt-14 pb-24">
 
         {/* Eyebrow */}
