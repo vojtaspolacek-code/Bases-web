@@ -993,8 +993,13 @@ export default function ProductReveal({
 
           return (
             <motion.div
-              className="fixed inset-0 z-[100] flex items-center justify-center"
-              style={{ background: 'rgba(0,0,0,0.72)', backdropFilter: 'blur(32px)' }}
+              className="fixed inset-x-0 bottom-0 z-[100] flex flex-col md:inset-0 md:items-center md:justify-center"
+              style={{
+                top: isMobile ? '120px' : 0,
+                background: 'rgba(0,0,0,0.72)',
+                backdropFilter: 'blur(32px)',
+                borderRadius: isMobile ? '20px 20px 0 0' : 0,
+              }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -1004,7 +1009,7 @@ export default function ProductReveal({
 
               {/* ── Zavírací křížek ─────────────────────────────────── */}
               <motion.button
-                className="absolute top-6 right-6 flex items-center justify-center
+                className="absolute top-4 right-4 md:top-6 md:right-6 flex items-center justify-center
                            text-white/60 hover:text-white cursor-pointer
                            rounded-full p-3 backdrop-blur-md
                            border border-white/10 transition-all duration-300"
@@ -1042,10 +1047,11 @@ export default function ProductReveal({
               <motion.div
                 className="relative rounded-2xl overflow-hidden"
                 style={{
-                  maxWidth:  '85vw',
-                  maxHeight: '82vh',
-                  width:  '85vw',
-                  height: '82vh',
+                  maxWidth:  isMobile ? '92vw' : '85vw',
+                  maxHeight: isMobile ? 'calc(100dvh - 220px)' : '82vh',
+                  width:     isMobile ? '92vw' : '85vw',
+                  height:    isMobile ? 'calc(100dvh - 220px)' : '82vh',
+                  margin:    isMobile ? 'auto' : undefined,
                   boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 0 50px rgba(0,0,0,0.55), 0 0 40px rgba(212,175,55,0.08)',
                 }}
                 initial={{ opacity: 0, scale: 0.94, y: 16 }}
