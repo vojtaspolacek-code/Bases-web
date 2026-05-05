@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -258,7 +258,7 @@ export default function Hero() {
       </div>
 
       {/* MOBILNÍ HORNÍ MASKA PRO SCROLLING - texty pod ni zajedou a zmizí */}
-      <div className="md:hidden fixed top-0 left-0 w-full h-[35vh] pointer-events-none z-[45] bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent" />
+      <div className="md:hidden fixed top-0 left-0 w-full h-[35vh] pointer-events-none z-[45] bg-gradient-to-b from-black via-black/80 to-transparent" />
 
     </section>
   )

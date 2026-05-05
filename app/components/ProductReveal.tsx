@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState, useCallback, useEffect, useRef } from 'react'
 import Image from 'next/image'
@@ -711,7 +711,7 @@ export default function ProductReveal({
         className={`fixed top-0 h-screen z-50 hidden md:flex flex-col ${panelSide === 'right' ? 'right-0' : 'left-0'}`}
         style={{
           width: 'clamp(300px, 34vw, 480px)',
-          background: 'rgba(8,8,8,0.88)',
+          background: 'rgba(0,0,0,0.88)',
           backdropFilter: 'blur(28px)',
           borderLeft:  panelSide === 'right' ? '1px solid rgba(199,160,75,0.12)' : 'none',
           borderRight: panelSide === 'left'  ? '1px solid rgba(199,160,75,0.12)' : 'none',
@@ -762,7 +762,7 @@ export default function ProductReveal({
               {/* ── A: ZÁHLAVÍ ──────────────────────────────────────── */}
               <div
                 className="flex-shrink-0 px-8 lg:px-10 pt-36 pb-6"
-                style={{ background: 'linear-gradient(to bottom, rgba(8,8,8,1) 65%, rgba(8,8,8,0))', position: 'relative', zIndex: 1 }}
+                style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,1) 65%, rgba(0,0,0,0))', position: 'relative', zIndex: 1 }}
               >
                 {/* Badge */}
                 {selected.badge && (

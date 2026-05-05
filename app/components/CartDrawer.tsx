@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -44,7 +44,7 @@ export default function CartDrawer() {
             transition={{ duration: 0.42, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.06 }}
             className="fixed top-0 right-0 h-full w-full max-w-md z-[10001] flex flex-col"
             style={{
-              background: 'rgba(8,8,8,0.98)',
+              background: 'rgba(0,0,0,0.98)',
               borderLeft: '1px solid rgba(255,255,255,0.06)',
             }}
           >

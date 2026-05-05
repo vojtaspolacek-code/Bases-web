@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { AuthenticateWithRedirectCallback } from '@clerk/nextjs'
 
@@ -7,7 +7,7 @@ import { AuthenticateWithRedirectCallback } from '@clerk/nextjs'
 
 export default function SsoCallbackPage() {
   return (
-    <main className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+    <main className="min-h-screen bg-black flex items-center justify-center">
       {/* Spinner — viditelný jen zlomek sekundy */}
       <div className="w-5 h-5 rounded-full border border-[#c7a04b]/30 border-t-[#c7a04b] animate-spin" />
       <AuthenticateWithRedirectCallback

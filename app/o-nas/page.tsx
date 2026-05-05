@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -181,15 +181,15 @@ export default function Onas() {
   }, [])
 
   return (
-    <main className="bg-[#080808] min-h-screen text-white overflow-x-hidden">
+    <main className="bg-black min-h-screen text-white overflow-x-hidden">
 
       {/* ── HERO SEKCE ── */}
       <section className="relative h-[100svh] min-h-[600px] flex overflow-hidden">
         <div className="absolute inset-0 md:left-[48%]">
           <Image src="/team.jpg" alt="Vojta a Jeňa" fill className="object-cover object-center" priority />
-          <div className="absolute inset-0 md:hidden" style={{ background:'rgba(8,8,8,0.58)' }} />
-          <div className="hidden md:block absolute inset-0" style={{ background:'linear-gradient(to right, #080808 0%, rgba(8,8,8,0.55) 30%, transparent 60%)' }} />
-          <div className="absolute bottom-0 left-0 right-0 h-56" style={{ background:'linear-gradient(to top, #080808, transparent)' }} />
+          <div className="absolute inset-0 md:hidden" style={{ background:'rgba(0,0,0,0.58)' }} />
+          <div className="hidden md:block absolute inset-0" style={{ background:'linear-gradient(to right, #000000 0%, rgba(0,0,0,0.55) 30%, transparent 60%)' }} />
+          <div className="absolute bottom-0 left-0 right-0 h-56" style={{ background:'linear-gradient(to top, #000000, transparent)' }} />
         </div>
         <div className="relative z-10 flex items-center w-full md:w-[52%] px-8 md:pl-[clamp(3rem,7vw,9rem)] md:pr-0">
           <div>

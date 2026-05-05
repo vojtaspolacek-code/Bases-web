@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
@@ -33,7 +33,7 @@ export default function SlunecnicovaSeminka() {
   }, [])
 
   if (isMobile) return (
-    <main style={{ background: '#080808', minHeight: '100vh', color: '#fff' }}>
+    <main style={{ background: '#000000', minHeight: '100vh', color: '#fff' }}>
       <div style={{ paddingTop: '5.5rem', paddingLeft: '2rem', paddingRight: '2rem' }}>
 
         {/* Zpět */}

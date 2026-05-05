@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -152,7 +152,7 @@ function ProductCard({
         marginTop:  hero ? '-24px' : '0px',
         background: hero
           ? 'linear-gradient(160deg, rgba(15,13,10,1) 0%, rgba(10,9,7,1) 100%)'
-          : '#0a0a0a',
+          : '#000000',
         border:     `1px solid ${hero ? 'rgba(199,160,75,0.22)' : 'rgba(199,160,75,0.10)'}`,
         boxShadow:  hero
           ? 'inset 0 0 60px rgba(199,160,75,0.04), inset 0 1px 0 rgba(199,160,75,0.10), 0 24px 60px rgba(0,0,0,0.6)'

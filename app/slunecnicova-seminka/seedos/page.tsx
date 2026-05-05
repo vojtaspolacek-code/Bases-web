@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import ProductReveal, { ProductItem } from '../../components/ProductReveal'
 
 const PRODUCTS: ProductItem[] = [
@@ -95,7 +95,7 @@ const PRODUCTS: ProductItem[] = [
 
 export default function SeedosPage() {
   return (
-    <main className="min-h-screen bg-[#0a0a0a] pt-8 md:pt-36 pb-6 md:pb-28 px-8 lg:px-16">
+    <main className="min-h-screen bg-black pt-8 md:pt-36 pb-6 md:pb-28 px-8 lg:px-16">
 
       {/* ── Heading ── */}
       <div className="flex -mt-6 md:mt-0 mb-8 md:mb-8 items-end justify-between md:border-b md:border-white/5 pb-8">

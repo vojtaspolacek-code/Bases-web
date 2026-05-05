@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { motion } from 'framer-motion'
 
@@ -22,7 +22,7 @@ export default function KontaktPage() {
   return (
     <main
       className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden"
-      style={{ background: '#0a0a0a' }}
+      style={{ background: '#000000' }}
     >
 
       {/* Subtle radial glow */}

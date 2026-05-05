@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useUser, useClerk } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
@@ -194,7 +194,7 @@ function TabOsobni({ user }: { user: NonNullable<ReturnType<typeof useUser>['use
                            text-[10px] font-semibold transition-all duration-300
                            hover:shadow-[0_6px_24px_rgba(199,160,75,0.28)] hover:-translate-y-0.5
                            disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ fontFamily: 'var(--font-montserrat)', background: '#c7a04b', color: '#0a0a0a' }}
+                style={{ fontFamily: 'var(--font-montserrat)', background: '#c7a04b', color: '#000000' }}
               >
                 <Check size={12} />
                 {saving ? 'Ukládám…' : 'Uložit změny'}
@@ -361,7 +361,7 @@ function TabAdresy({ user }: { user: NonNullable<ReturnType<typeof useUser>['use
                            text-[10px] font-semibold transition-all duration-300
                            hover:shadow-[0_6px_24px_rgba(199,160,75,0.28)] hover:-translate-y-0.5
                            disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ fontFamily: 'var(--font-montserrat)', background: '#c7a04b', color: '#0a0a0a' }}
+                style={{ fontFamily: 'var(--font-montserrat)', background: '#c7a04b', color: '#000000' }}
               >
                 <Check size={12} />
                 {saving ? 'Ukládám…' : 'Uložit adresu'}
@@ -492,7 +492,7 @@ export default function ProfilPage() {
 
   if (!isLoaded) {
     return (
-      <main className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+      <main className="min-h-screen bg-black flex items-center justify-center">
         <div className="w-5 h-5 rounded-full border border-[#c7a04b]/30 border-t-[#c7a04b] animate-spin" />
       </main>
     )
@@ -501,7 +501,7 @@ export default function ProfilPage() {
   if (!user) { router.replace('/ucet'); return null }
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a] pt-[72px]">
+    <main className="min-h-screen bg-black pt-[72px]">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pt-4 md:pt-10 lg:pt-14 pb-24">
 
         {/* Eyebrow */}

@@ -1,4 +1,4 @@
-// Sdílené komponenty pro /ucet/* stránky
+﻿// Sdílené komponenty pro /ucet/* stránky
 'use client'
 
 import Image from 'next/image'
@@ -19,7 +19,7 @@ export function AuthPanel() {
       {/* Vrstvené overlaye */}
       <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.55)' }} />
       <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 80% 70% at 50% 50%, transparent 20%, rgba(0,0,0,0.6) 80%)' }} />
-      <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(10,10,10,0.8) 0%, transparent 30%, transparent 70%, rgba(10,10,10,0.8) 100%)' }} />
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 65%, rgba(0,0,0,0.85) 100%)' }} />
 
       {/* Textový obsah */}
       <div className="relative z-10 px-12 text-center">
@@ -120,7 +120,7 @@ export function GoldButton({ children, disabled, loading, label }: {
                  active:translate-y-0 active:shadow-none
                  disabled:opacity-50 disabled:cursor-not-allowed
                  disabled:hover:translate-y-0 disabled:hover:shadow-none"
-      style={{ fontFamily: 'var(--font-montserrat)', background: '#c7a04b', color: '#0a0a0a' }}
+      style={{ fontFamily: 'var(--font-montserrat)', background: '#c7a04b', color: '#000000' }}
     >
       {loading ? `${label.split(' ')[0]}…` : label}
       {children}

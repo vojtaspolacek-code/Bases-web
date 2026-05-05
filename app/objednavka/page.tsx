@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
@@ -342,7 +342,7 @@ export default function ObjednavkaPage() {
         onLoad={initAutocomplete}
       />
 
-      <main className="min-h-screen pt-24 md:pt-28 pb-20 px-5 md:px-10 lg:px-16 bg-[#0a0a0a]">
+      <main className="min-h-screen pt-24 md:pt-28 pb-20 px-5 md:px-10 lg:px-16 bg-black">
 
         {/* Heading */}
         <div className="max-w-6xl mx-auto mb-10 md:mb-14 pb-6"

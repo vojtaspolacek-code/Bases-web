@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 
 const SOCIAL = [
   { label: 'Instagram', href: 'https://www.instagram.com/bases.official' },
@@ -33,7 +33,7 @@ function FooterLink({ label, href, small }: { label: string; href: string; small
 
 export default function Footer() {
   return (
-    <footer style={{ background: '#0a0a0a', position: 'relative', zIndex: 10 }}>
+    <footer style={{ background: '#000000', position: 'relative', zIndex: 10 }}>
 
       <div className="relative flex items-center" style={{ height: '1px' }}>
         <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to right, transparent, rgba(199,160,75,0.5))' }} />

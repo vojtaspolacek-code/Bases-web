@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { useState } from 'react'
@@ -79,7 +79,7 @@ export default function ResetPage() {
 
   /* ─── UI ─── */
   return (
-    <main className="min-h-screen bg-[#0a0a0a] pt-0 md:pt-[72px] grid md:grid-cols-2">
+    <main className="min-h-screen bg-black pt-0 md:pt-[72px] grid md:grid-cols-2">
 
       {/* ── LEVÝ SLOUPEC ── */}
       <div className="flex flex-col items-center justify-center px-8 h-[calc(100svh-100px)] md:h-auto md:min-h-[calc(100vh-72px)] md:py-0 md:px-12 lg:px-20">

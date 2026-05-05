@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Image from 'next/image'
 
@@ -78,7 +78,7 @@ export default function Products() {
   return (
     <section
       id="products"
-      className="bg-[#0a0a0a] px-8 lg:px-20 py-28"
+      className="bg-black px-8 lg:px-20 py-28"
     >
       {/* Nadpis sekce */}
       <div className="mb-16">
