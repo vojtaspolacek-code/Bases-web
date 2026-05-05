@@ -10,9 +10,10 @@ import { Check, MapPin } from 'lucide-react'
 
 // ── Sdílená třída pro inputy ─────────────────────────────────────────────────
 const INPUT_CLS = [
-  'w-full bg-transparent border-b text-white/90 text-[0.9rem]',
+  'w-full bg-transparent border-b text-white/85 text-[0.9rem]',
   'outline-none transition-all duration-300 py-2.5',
-  'placeholder:text-white/20',
+  'placeholder:text-white/15',
+  'hover:border-white/20',
   'focus:border-[#c7a04b]',
 ].join(' ')
 
@@ -81,13 +82,13 @@ function Field({
   return (
     <div>
       <label className={`${LABEL_CLS}`}
-        style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(199,160,75,0.55)' }}>
+        style={{ fontFamily: 'var(--font-montserrat)', color: 'rgba(255,255,255,0.30)' }}>
         {label}
       </label>
       <input
         type={type} name={name} value={value} onChange={onChange}
         placeholder={placeholder} autoComplete="off" readOnly={readOnly}
-        className={`${INPUT_CLS} ${submitted && error ? 'border-[#c7a04b]/70' : 'border-white/12'} ${readOnly ? 'opacity-50 cursor-default' : ''}`}
+        className={`${INPUT_CLS} ${submitted && error ? 'border-[#c7a04b]/70' : 'border-white/8'} ${readOnly ? 'opacity-50 cursor-default' : ''}`}
         style={{ fontFamily: 'var(--font-montserrat)' }}
       />
       {submitted && error && (
@@ -471,7 +472,7 @@ export default function ObjednavkaPage() {
                     type="text" name="ulice" value={form.ulice} onChange={handleChange}
                     placeholder="Začněte psát adresu…"
                     autoComplete="off" data-lpignore="true" data-form-type="other"
-                    className={`${INPUT_CLS} ${submitted && errors.ulice ? 'border-[#c7a04b]/70' : 'border-white/12'}`}
+                    className={`${INPUT_CLS} ${submitted && errors.ulice ? 'border-[#c7a04b]/70' : 'border-white/8'}`}
                     style={{ fontFamily: 'var(--font-montserrat)' }}
                   />
                   {submitted && errors.ulice && (
@@ -559,7 +560,7 @@ export default function ObjednavkaPage() {
                           value={password}
                           onChange={e => { setPassword(e.target.value); setPwError('') }}
                           placeholder="min. 8 znaků"
-                          className={`${INPUT_CLS} ${pwError ? 'border-[#c7a04b]/70' : 'border-white/12'}`}
+                          className={`${INPUT_CLS} ${pwError ? 'border-[#c7a04b]/70' : 'border-white/8'}`}
                           style={{ fontFamily: 'var(--font-montserrat)' }}
                         />
                         {pwError && (
