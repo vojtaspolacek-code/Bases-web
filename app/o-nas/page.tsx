@@ -15,9 +15,9 @@ const TIMELINE = [
   { id:'04', side:'right' as const, label:'NAŠE VIZE', body:'Chceme tento fenomén v Česku znormalizovat. Zpřístupnit pravou Ameriku každému, kdo chce zažít tu stejnou pohodu, jakou jsme u těch prvních dvaceti sáčků zažili my.' },
 ]
 
-function Card({ entry, delay=0, isMobile=false, isLeft=true }: { entry: typeof TIMELINE[number]; delay?: number; isMobile?: boolean; isLeft?: boolean }) {
+function Card({ entry, delay=0, isMobile=false }: { entry: typeof TIMELINE[number]; delay?: number; isMobile?: boolean }) {
   const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-10% 0px' })
+  const inView = useInView(ref, { once: true, margin: '-8% 0px' })
 
   if (isMobile) {
     return (
@@ -60,33 +60,74 @@ function Card({ entry, delay=0, isMobile=false, isLeft=true }: { entry: typeof T
     )
   }
 
-  // Desktop karta — editorial fullwidth
+  // Desktop karta — 2×2 grid
   return (
-    <motion.div ref={ref}
-      initial={{ opacity: 0, x: isLeft ? -32 : 32 }}
-      animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.9, delay, ease }}
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 24 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.75, delay, ease }}
       style={{
         position: 'relative',
-        zIndex: 1,
-        width: '100%',
-        maxWidth: '520px',
-        padding: 'clamp(3rem, 6vw, 5rem) clamp(3rem, 8vw, 8rem)',
-        marginLeft: isLeft ? 0 : 'auto',
-        marginRight: isLeft ? 'auto' : 0,
-      }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
-        <span style={{ fontFamily: 'var(--font-montserrat)', fontSize: '10px', letterSpacing: '0.4em', color: 'rgba(199,160,75,0.5)', fontWeight: 400 }}>
-          {entry.id}
-        </span>
-        <div style={{ width: '28px', height: '1px', background: GOLD, opacity: 0.5 }} />
-        <span style={{ fontFamily: 'var(--font-montserrat)', fontSize: '10px', letterSpacing: '0.44em', textTransform: 'uppercase', color: GOLD, fontWeight: 500 }}>
-          {entry.label}
-        </span>
+        overflow: 'hidden',
+        padding: 'clamp(2rem, 3.5vw, 3rem) clamp(2rem, 3.5vw, 3rem)',
+        background: 'rgba(255,255,255,0.025)',
+        border: '1px solid rgba(199,160,75,0.12)',
+        borderRadius: '2px',
+      }}
+    >
+      {/* Watermark číslo uvnitř karty */}
+      <span aria-hidden style={{
+        position: 'absolute',
+        bottom: '-1.5rem',
+        right: '-0.5rem',
+        fontFamily: 'var(--font-exo2)',
+        fontWeight: 700,
+        fontSize: 'clamp(6rem, 9vw, 9rem)',
+        lineHeight: 1,
+        letterSpacing: '-0.04em',
+        color: GOLD,
+        opacity: 0.06,
+        pointerEvents: 'none',
+        userSelect: 'none',
+        zIndex: 0,
+      }}>{entry.id}</span>
+
+      {/* Obsah */}
+      <div style={{ position: 'relative', zIndex: 1 }}>
+
+        {/* Label řádek */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
+          <span style={{
+            fontFamily: 'var(--font-montserrat)',
+            fontSize: '9px',
+            letterSpacing: '0.38em',
+            color: 'rgba(199,160,75,0.5)',
+            fontWeight: 400,
+          }}>{entry.id}</span>
+          <div style={{ width: '24px', height: '1px', background: GOLD, opacity: 0.45 }} />
+          <span style={{
+            fontFamily: 'var(--font-montserrat)',
+            fontSize: '9px',
+            letterSpacing: '0.44em',
+            textTransform: 'uppercase',
+            color: GOLD,
+            fontWeight: 500,
+          }}>{entry.label}</span>
+        </div>
+
+        {/* Text */}
+        <p style={{
+          fontFamily: 'var(--font-montserrat)',
+          fontSize: 'clamp(0.82rem, 0.95vw, 0.95rem)',
+          fontWeight: 300,
+          lineHeight: 1.95,
+          color: 'rgba(255,255,255,0.62)',
+          letterSpacing: '0.01em',
+          margin: 0,
+        }}>{entry.body}</p>
+
       </div>
-      <p style={{ fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(0.95rem, 1.1vw, 1.1rem)', fontWeight: 300, lineHeight: 1.9, color: 'rgba(255,255,255,0.68)', letterSpacing: '0.01em' }}>
-        {entry.body}
-      </p>
     </motion.div>
   )
 }
@@ -178,38 +219,34 @@ export default function Onas() {
           </div>
         )}
 
-        {/* ── DESKTOP — editorial fullwidth ── */}
+        {/* ── DESKTOP — 2×2 grid ── */}
         {!isMobile && (
-          <div style={{ width: '100%' }}>
-            {TIMELINE.map((entry, i) => {
-              const isLeft = entry.side === 'left'
-              const isLast = i === TIMELINE.length - 1
-              return (
-                <section key={entry.id} className="relative w-full flex items-center overflow-hidden"
-                  style={{ minHeight: '38vh', borderBottom: isLast ? 'none' : '1px solid rgba(199,160,75,0.08)' }}>
+          <div className="mx-auto px-[clamp(3rem,8vw,10rem)]" style={{ maxWidth: '1200px' }}>
 
-                  {/* Obří watermark číslo */}
-                  <span aria-hidden style={{
-                    position: 'absolute',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    ...(isLeft ? { right: '-2rem' } : { left: '-2rem' }),
-                    fontFamily: 'var(--font-exo2)',
-                    fontWeight: 700,
-                    fontSize: 'clamp(14rem, 22vw, 20rem)',
-                    lineHeight: 1,
-                    letterSpacing: '-0.05em',
-                    color: GOLD,
-                    opacity: 0.045,
-                    pointerEvents: 'none',
-                    userSelect: 'none',
-                    zIndex: 0,
-                  }}>{entry.id}</span>
+            {/* Nadpis sekce */}
+            <div style={{ marginBottom: 'clamp(2.5rem,4vw,4rem)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <div style={{ width: '32px', height: '1px', background: GOLD, opacity: 0.5 }} />
+              <span style={{
+                fontFamily: 'var(--font-montserrat)',
+                fontSize: '10px',
+                letterSpacing: '0.5em',
+                textTransform: 'uppercase',
+                color: 'rgba(199,160,75,0.6)',
+                fontWeight: 400,
+              }}>Náš příběh</span>
+            </div>
 
-                  <Card entry={entry} isLeft={isLeft} delay={0.15} />
-                </section>
-              )
-            })}
+            {/* 2×2 grid */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: 'clamp(1rem,2vw,1.75rem)',
+            }}>
+              {TIMELINE.map((entry, i) => (
+                <Card key={entry.id} entry={entry} delay={i * 0.1} />
+              ))}
+            </div>
+
           </div>
         )}
 
