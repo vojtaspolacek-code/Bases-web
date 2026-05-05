@@ -60,11 +60,18 @@ function Card({ entry, delay=0, isMobile=false }: { entry: typeof TIMELINE[numbe
     )
   }
 
-  // Původní desktop karta
+  // Desktop karta — glassmorphism
   return (
     <motion.div ref={ref} initial={{ opacity:0, y:28 }} animate={inView ? { opacity:1, y:0 } : {}}
       transition={{ duration:0.8, delay, ease }} className="w-full max-w-[420px] p-8 lg:p-10"
-      style={{ background:'transparent', borderLeft:'2px solid rgba(199,160,75,0.35)', paddingLeft:'1.5rem', borderRadius:0 }}>
+      style={{
+        background: 'rgba(255,255,255,0.03)',
+        border: '1px solid rgba(199,160,75,0.15)',
+        borderRadius: '2px',
+        backdropFilter: 'blur(8px)',
+        boxShadow: '0 0 40px rgba(199,160,75,0.04), inset 0 0 0 1px rgba(255,255,255,0.03)',
+      }}>
+      <div style={{ width:'20px', height:'1px', background:GOLD, opacity:0.7, marginBottom:'1rem' }} />
       <p className="text-[10px] font-medium uppercase mb-5"
         style={{ fontFamily:'var(--font-montserrat)', letterSpacing:'0.44em', color:GOLD }}>
         {entry.label}
@@ -149,13 +156,31 @@ export default function Onas() {
 
             return (
               <div key={entry.id} className="relative flex items-center"
-                style={{ marginBottom: isLast ? 0 : 'clamp(8rem,13vw,13rem)' }}>
+                style={{ marginBottom: isLast ? 0 : 'clamp(3rem,5vw,5rem)' }}>
                 <span aria-hidden className="absolute pointer-events-none select-none"
-                  style={{ top:'50%', transform:'translateY(-50%)', left: isLeft ? '1%' : 'auto', right: isLeft ? 'auto' : '1%', fontFamily:'var(--font-exo2)', fontWeight:700, fontSize:'clamp(10rem,17vw,16rem)', lineHeight:1, letterSpacing:'-0.04em', color:GOLD, opacity:0.07, zIndex:0 }}>
+                  style={{ top:'50%', transform:'translateY(-50%)', left: isLeft ? '1%' : 'auto', right: isLeft ? 'auto' : '1%', fontFamily:'var(--font-exo2)', fontWeight:700, fontSize:'clamp(11rem,19vw,18rem)', lineHeight:1, letterSpacing:'-0.04em', color:GOLD, opacity:0.10, zIndex:0 }}>
                   {entry.id}
                 </span>
-                <div aria-hidden className="absolute left-1/2 -translate-x-1/2 rounded-full z-10"
-                  style={{ width:9, height:9, background:GOLD, boxShadow:'0 0 0 3px rgba(199,160,75,0.15), 0 0 18px 6px rgba(199,160,75,0.25)' }} />
+
+                {/* Spojovací linka karta → tečka */}
+                {isLeft && (
+                  <div aria-hidden className="absolute z-[5] pointer-events-none"
+                    style={{ left:'calc(50% - clamp(2.5rem,5vw,5rem))', right:'50%', top:'50%', transform:'translateY(-50%)', height:'1px', background:'linear-gradient(to right, transparent, rgba(199,160,75,0.25))' }} />
+                )}
+                {!isLeft && (
+                  <div aria-hidden className="absolute z-[5] pointer-events-none"
+                    style={{ left:'50%', right:'calc(50% - clamp(2.5rem,5vw,5rem))', top:'50%', transform:'translateY(-50%)', height:'1px', background:'linear-gradient(to left, transparent, rgba(199,160,75,0.25))' }} />
+                )}
+
+                <motion.div aria-hidden className="absolute left-1/2 -translate-x-1/2 rounded-full z-10"
+                  style={{ width:11, height:11, background:GOLD }}
+                  animate={{ boxShadow: [
+                    '0 0 0 3px rgba(199,160,75,0.15), 0 0 18px 6px rgba(199,160,75,0.2)',
+                    '0 0 0 6px rgba(199,160,75,0.05), 0 0 28px 10px rgba(199,160,75,0.35)',
+                    '0 0 0 3px rgba(199,160,75,0.15), 0 0 18px 6px rgba(199,160,75,0.2)',
+                  ]}}
+                  transition={{ duration:2.5, repeat:Infinity, ease:'easeInOut' }} />
+
                 <div className="w-1/2 flex justify-end" style={{ paddingRight:'clamp(2.5rem,5vw,5rem)' }}>
                   {isLeft && <Card entry={entry} delay={0.15} />}
                 </div>
