@@ -269,6 +269,32 @@ export default function ProductReveal({
                   />
                 </div>
 
+                {/* Křížek — zobrazí se pouze pro vybraný produkt */}
+                {isSelected && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '8px',
+                    right: '8px',
+                    zIndex: 20,
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '50%',
+                    background: 'rgba(0,0,0,0.55)',
+                    border: '1px solid rgba(199,160,75,0.3)',
+                    backdropFilter: 'blur(8px)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'rgba(255,255,255,0.7)',
+                    fontSize: '14px',
+                    cursor: 'pointer',
+                  }}
+                    onClick={(e) => { e.stopPropagation(); handleClose() }}
+                  >
+                    ×
+                  </div>
+                )}
+
                 {/* Text — vycentrovaný */}
                 <div className="pt-2 pb-4 text-center w-full px-1">
                   <div className="w-5 h-px mx-auto mb-2"
@@ -410,7 +436,7 @@ export default function ProductReveal({
       <div
         className="fixed inset-x-0 bottom-0 z-50 md:hidden"
         style={{
-          height: '88dvh',
+          height: '85dvh',
           background: 'linear-gradient(160deg, #16141a 0%, #100e0b 55%, #0d0b08 100%)',
           backdropFilter: 'blur(32px)',
           borderTop: '1px solid rgba(199,160,75,0.18)',
@@ -696,8 +722,8 @@ export default function ProductReveal({
           bottom: 0,
           left: 0,
           right: 0,
-          height: '80px',
-          background: 'linear-gradient(to top, rgba(13,11,8,0.95), transparent)',
+          height: '60px',
+          background: 'linear-gradient(to top, rgba(13,11,8,0.85), transparent)',
           pointerEvents: 'none',
           zIndex: 10,
           borderRadius: '0 0 24px 24px',
