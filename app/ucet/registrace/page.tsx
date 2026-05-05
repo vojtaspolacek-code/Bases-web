@@ -94,7 +94,7 @@ export default function RegistracePage() {
 
   /* ─── UI ─── */
   return (
-    <main className="min-h-screen bg-[#0a0a0a] pt-[72px] grid md:grid-cols-2">
+    <main className="min-h-screen bg-[#0a0a0a] pt-0 md:pt-[72px] grid md:grid-cols-2">
 
       {/* ── LEVÝ SLOUPEC ── */}
       <div className="flex flex-col items-center justify-start md:justify-center px-8 pt-3 pb-12 md:py-6 md:px-12 lg:px-20 md:min-h-[calc(100vh-72px)]">
