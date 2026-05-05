@@ -155,6 +155,7 @@ export default function ProductReveal({
     setSheetDragY(0)
     setIsSheetDragging(false)
     if (carouselRef.current) carouselRef.current.scrollLeft = 0
+    if (sheetScrollRef.current) sheetScrollRef.current.scrollTop = 0
   }, [selectedSlug])
 
   const handleCarouselScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
@@ -409,7 +410,7 @@ export default function ProductReveal({
       <div
         className="fixed inset-x-0 bottom-0 z-50 md:hidden"
         style={{
-          height: '92dvh',
+          height: '88dvh',
           background: 'linear-gradient(160deg, #16141a 0%, #100e0b 55%, #0d0b08 100%)',
           backdropFilter: 'blur(32px)',
           borderTop: '1px solid rgba(199,160,75,0.18)',
@@ -688,6 +689,19 @@ export default function ProductReveal({
             </div>
           </div>
         )}
+
+        {/* Gradient hint — naznačuje scrollovatelný obsah */}
+        <div style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: '80px',
+          background: 'linear-gradient(to top, rgba(13,11,8,0.95), transparent)',
+          pointerEvents: 'none',
+          zIndex: 10,
+          borderRadius: '0 0 24px 24px',
+        }} />
       </div>
 
       {/* ════════════════════════════════════════════════════════════
