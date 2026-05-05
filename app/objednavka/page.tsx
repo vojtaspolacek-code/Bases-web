@@ -390,7 +390,7 @@ export default function ObjednavkaPage() {
                 <Field label="Jméno"    name="jmeno"    value={form.jmeno}    onChange={handleChange} error={errors.jmeno}    submitted={submitted} readOnly={!!user} />
                 <Field label="Příjmení" name="prijmeni" value={form.prijmeni} onChange={handleChange} error={errors.prijmeni} submitted={submitted} readOnly={!!user} />
                 <Field label="E-mail"   name="email"    value={form.email}    onChange={handleChange} error={errors.email}    submitted={submitted} type="email" readOnly={!!user} />
-                <Field label="Telefon"  name="telefon"  value={form.telefon}  onChange={handleChange} error={errors.telefon}  submitted={submitted} type="tel" placeholder="+420" />
+                <Field label="Telefon"  name="telefon"  value={form.telefon}  onChange={handleChange} error={errors.telefon}  submitted={submitted} type="tel" placeholder="+420" readOnly={!!user} />
               </div>
               {isLoaded && user && (
                 <p className="mt-3 text-[9px] tracking-[0.08em]"
